@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Our Coffee — The Cupping Room</title>
+<meta name="description" content="Explore The Cupping Room's specialty coffee sourcing, roasting, and ONA Coffee partnership in Canberra.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#F5F0E8;--cream-light:#FAF7F2;--beige:#E8DECE;--brown-dark:#2C1A0E;--brown-mid:#5C3D24;--brown-warm:#8B5E3C;--brown-light:#C4956A;--green-muted:#4A5240;--green-sage:#7A8C6E;--text-primary:#2C1A0E;--text-secondary:#6B4C35;--text-muted:#9C8070;--gold:#C8A96E;--gold-light:#E2C99A;--shadow-warm:rgba(44,26,14,0.12);--shadow-deep:rgba(44,26,14,0.25);--t:0.4s cubic-bezier(0.25,0.46,0.45,0.94);--tf:0.2s cubic-bezier(0.25,0.46,0.45,0.94);}
+[data-theme="dark"]{--cream:#1C1208;--cream-light:#221608;--beige:#2E1F10;--brown-dark:#F5EDD8;--brown-mid:#E0C9A8;--brown-warm:#C4A882;--brown-light:#9A7A5C;--text-primary:#F5EDD8;--text-secondary:#C4A882;--text-muted:#8A7060;--shadow-warm:rgba(0,0,0,0.3);--shadow-deep:rgba(0,0,0,0.5);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-primary);overflow-x:hidden;transition:background var(--t),color var(--t);}img{display:block;max-width:100%}a{text-decoration:none;color:inherit}button{border:none;background:none;cursor:pointer;font-family:inherit}
+#loader{position:fixed;inset:0;background:#2C1A0E;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity 0.8s ease,visibility 0.8s ease;}#loader.hidden{opacity:0;visibility:hidden;pointer-events:none}.loader-bar{width:180px;height:1px;background:rgba(245,240,232,0.15);overflow:hidden;}.loader-progress{height:100%;background:var(--gold);width:0%;animation:loadBar 1.8s ease forwards;}@keyframes loadBar{to{width:100%}}@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.4rem 4rem;display:flex;align-items:center;justify-content:space-between;transition:all 0.5s ease;}nav.scrolled{background:rgba(245,240,232,0.96);backdrop-filter:blur(20px);padding:0.85rem 4rem;border-bottom:1px solid rgba(139,94,60,0.1);box-shadow:0 4px 30px var(--shadow-warm);}[data-theme="dark"] nav.scrolled{background:rgba(28,18,8,0.96);}
+.nav-links{display:flex;align-items:center;gap:2.2rem;list-style:none;}.nav-links a{font-size:0.82rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:400;color:rgba(245,240,232,0.85);transition:color var(--tf);position:relative;}.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform var(--tf);}.nav-links a:hover::after,.nav-links a.active-link::after{transform:scaleX(1)}.nav-links a:hover{color:var(--gold-light)}.nav-links a.active-link{color:var(--gold);}nav.scrolled .nav-links a{color:var(--text-secondary);}nav.scrolled .nav-links a:hover{color:var(--brown-warm);}
+.nav-right{display:flex;align-items:center;gap:1.25rem;}.nav-reserve-btn{padding:0.55rem 1.4rem;border:1px solid rgba(245,240,232,0.5);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream);border-radius:100px;transition:all var(--tf);}.nav-reserve-btn:hover{background:var(--gold);border-color:var(--gold);color:#2C1A0E;}nav.scrolled .nav-reserve-btn{color:var(--text-primary);border-color:var(--brown-light);}
+.theme-toggle{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--cream);transition:all var(--tf);font-size:1rem;}nav.scrolled .theme-toggle{color:var(--text-primary);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}.hamburger span{display:block;width:24px;height:1.5px;background:var(--cream);transition:all var(--tf);}nav.scrolled .hamburger span{background:var(--text-primary);}.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+#mobile-menu{position:fixed;inset:0;z-index:999;background:#2C1A0E;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;opacity:0;visibility:hidden;transition:all 0.5s cubic-bezier(0.77,0,0.175,1);transform:translateY(-20px);}#mobile-menu.open{opacity:1;visibility:visible;transform:translateY(0)}.mobile-nav-links{list-style:none;text-align:center;}.mobile-nav-links li{margin:0.75rem 0;}.mobile-nav-links a{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--cream);display:block;opacity:0;transform:translateY(30px);transition:opacity 0.5s ease,transform 0.5s ease,color 0.2s ease;}#mobile-menu.open .mobile-nav-links a{opacity:1;transform:translateY(0)}#mobile-menu.open .mobile-nav-links li:nth-child(1) a{transition-delay:0.1s}#mobile-menu.open .mobile-nav-links li:nth-child(2) a{transition-delay:0.15s}#mobile-menu.open .mobile-nav-links li:nth-child(3) a{transition-delay:0.2s}#mobile-menu.open .mobile-nav-links li:nth-child(4) a{transition-delay:0.25s}#mobile-menu.open .mobile-nav-links li:nth-child(5) a{transition-delay:0.3s}#mobile-menu.open .mobile-nav-links li:nth-child(6) a{transition-delay:0.35s}#mobile-menu.open .mobile-nav-links li:nth-child(7) a{transition-delay:0.4s}.mobile-nav-links a:hover{color:var(--gold)}
+.section{padding:8rem 4rem}.section-inner{max-width:1300px;margin:0 auto}.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s ease,transform 0.8s ease;}.reveal.visible{opacity:1;transform:translateY(0)}.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity 0.8s ease,transform 0.8s ease;}.reveal-left.visible{opacity:1;transform:translateX(0)}.reveal-right{opacity:0;transform:translateX(40px);transition:opacity 0.8s ease,transform 0.8s ease;}.reveal-right.visible{opacity:1;transform:translateX(0)}
+.section-label{font-size:0.75rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);font-weight:400;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}.section-label::before{content:'';width:30px;height:1px;background:var(--gold);}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:300;line-height:1.15;color:var(--text-primary);margin-bottom:1.5rem;}.section-title em{font-style:italic;color:var(--brown-warm)}
+.page-hero{position:relative;height:65vh;min-height:500px;display:flex;align-items:center;justify-content:center;overflow:hidden;}.page-hero-bg{position:absolute;inset:0;overflow:hidden;}.page-hero-bg img{width:100%;height:100%;object-fit:cover;}.page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(28,18,8,0.35) 0%,rgba(28,18,8,0.65) 60%,rgba(28,18,8,0.9) 100%);pointer-events:none;}
+.page-hero-content{position:relative;z-index:2;text-align:center;padding:0 2rem;max-width:800px;}.breadcrumb{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.45);margin-bottom:1.25rem;display:flex;align-items:center;justify-content:center;gap:0.75rem;}.breadcrumb a{color:rgba(245,240,232,0.45);transition:color 0.2s;}.breadcrumb a:hover{color:var(--gold);}
+.page-hero-content h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,6rem);font-weight:300;color:var(--cream);line-height:1.05;margin-bottom:1rem;animation:fadeInUp 0.9s ease 0.3s both;}.page-hero-content h1 em{font-style:italic;color:var(--gold-light);}
+.page-hero-content p{font-size:1.05rem;color:rgba(245,240,232,0.65);font-weight:300;line-height:1.8;animation:fadeInUp 0.9s ease 0.55s both;}
+.btn-primary{padding:0.95rem 2.4rem;background:var(--gold);color:#2C1A0E;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;border-radius:100px;transition:all var(--tf);display:inline-block;border:none;cursor:pointer;}.btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 30px rgba(200,169,110,0.4);}
+.btn-outline-dark{padding:0.95rem 2.4rem;border:1px solid var(--beige);color:var(--text-secondary);font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;border-radius:100px;transition:all var(--tf);display:inline-block;cursor:pointer;}.btn-outline-dark:hover{background:var(--brown-dark);color:var(--cream);border-color:var(--brown-dark);transform:translateY(-2px);}
+footer{background:#2C1A0E;padding:5rem 4rem 2rem;}.footer-top-line{height:1px;background:linear-gradient(to right,transparent,rgba(200,169,110,0.45),transparent);margin-bottom:4rem;}.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:4rem;max-width:1300px;margin:0 auto;}.footer-brand p{font-size:0.87rem;line-height:1.75;color:rgba(245,240,232,0.4);font-weight:300;margin-top:0.75rem;margin-bottom:1.5rem;max-width:280px;}.footer-social{display:flex;gap:0.7rem;}.social-link{width:36px;height:36px;border:1px solid rgba(200,169,110,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;color:rgba(245,240,232,0.42);transition:all var(--tf);}.social-link:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);}
+.footer-col h4{font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);font-weight:400;margin-bottom:1.5rem;}.footer-links{list-style:none;display:flex;flex-direction:column;gap:0.7rem;}.footer-links li a{font-size:0.87rem;color:rgba(245,240,232,0.4);transition:color var(--tf);font-weight:300;}.footer-links li a:hover{color:var(--cream);}
+.footer-hours{display:flex;flex-direction:column;gap:0.45rem;}.hour-row{display:flex;justify-content:space-between;font-size:0.82rem;font-weight:300;color:rgba(245,240,232,0.4);padding-bottom:0.45rem;border-bottom:1px solid rgba(200,169,110,0.07);}.hour-row:last-child{border-bottom:none}.hour-row strong{color:rgba(245,240,232,0.62);font-weight:400;}
+.footer-address{font-size:0.84rem;line-height:1.8;color:rgba(245,240,232,0.4);font-weight:300;margin-bottom:1.2rem;}.footer-bottom{max-width:1300px;margin:3.5rem auto 0;padding-top:2rem;border-top:1px solid rgba(200,169,110,0.1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}.footer-bottom p{font-size:0.78rem;color:rgba(245,240,232,0.2);font-weight:300;}.acknowledge{max-width:1300px;margin:2rem auto 0;padding:1.5rem 0;border-top:1px solid rgba(200,169,110,0.06);font-size:0.75rem;line-height:1.7;color:rgba(245,240,232,0.18);font-weight:300;font-style:italic;text-align:center;}
+@media(max-width:1024px){.section{padding:6rem 2.5rem}nav{padding:1.2rem 2.5rem}nav.scrolled{padding:0.85rem 2.5rem}footer{padding:4rem 2.5rem 2rem}.footer-grid{grid-template-columns:1fr 1fr;gap:3rem}}@media(max-width:768px){.nav-links,.nav-reserve-btn{display:none}.hamburger{display:flex}.section{padding:5rem 1.5rem}footer{padding:3.5rem 1.5rem 2rem}.footer-grid{grid-template-columns:1fr;gap:2.5rem}nav{padding:1rem 1.5rem}nav.scrolled{padding:0.75rem 1.5rem}}
+*:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px;}
+.origin-card{background:var(--cream);border-radius:12px;padding:2rem;border:1px solid rgba(139,94,60,0.08);transition:all var(--tf);text-align:center;}
+.origin-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px var(--shadow-warm);border-color:rgba(200,169,110,0.2);}
+.origin-icon{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--brown-warm));display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-size:2rem;}
+.origin-card h4{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--text-primary);margin-bottom:0.5rem;}
+.origin-card .notes{font-size:0.85rem;color:var(--text-muted);font-weight:300;line-height:1.7;}
+.tasting-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem;}
+.tasting-card{background:var(--cream-light);border-radius:12px;overflow:hidden;border:1px solid rgba(139,94,60,0.08);transition:all var(--tf);}
+.tasting-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px var(--shadow-warm);}
+.tasting-img{height:240px;overflow:hidden;}
+.tasting-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;}
+.tasting-card:hover .tasting-img img{transform:scale(1.05)}
+.tasting-body{padding:1.75rem;}
+.tasting-name{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:400;color:var(--text-primary);margin-bottom:0.5rem;}
+.tasting-details{font-size:0.8rem;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;}
+.tasting-desc{font-size:0.88rem;line-height:1.6;color:var(--text-muted);font-weight:300;}
+.process-step{display:grid;grid-template-columns:60px 1fr;gap:2rem;align-items:start;margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(139,94,60,0.08);}
+.process-step:last-child{border-bottom:none;}
+.step-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--gold);}
+.step-body h4{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:var(--text-primary);margin-bottom:0.5rem;}
+.step-body p{font-size:0.95rem;line-height:1.8;color:var(--text-secondary);font-weight:300;}
+@media(max-width:900px){.tasting-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.tasting-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="loader" style="background:#2C1A0E;">
+  <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/d1c826e5-faf1-470e-a2aa-b969b54078cf/logo.png?format=300w" alt="The Cupping Room" style="height:60px;width:auto;filter:brightness(0) invert(1);opacity:0.9;animation:fadeInUp 0.7s ease forwards;">
+  <div class="loader-bar"><div class="loader-progress"></div></div>
+</div>
+
+<nav id="mainNav">
+  <a href="index.html"><img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/d1c826e5-faf1-470e-a2aa-b969b54078cf/logo.png?format=300w" alt="The Cupping Room" style="height:42px;width:auto;filter:brightness(0) invert(1);transition:filter 0.4s ease,height 0.4s ease;" id="navLogoImg"></a>
+  <ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="menu.html">Menu</a></li><li><a href="coffee.html" class="active-link">Our Coffee</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="events.html">What's On</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle">☾</button>
+    <a href="contact.html" class="nav-reserve-btn">Reserve</a>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div id="mobile-menu">
+  <ul class="mobile-nav-links"><li><a href="index.html" class="mob-link">Home</a></li><li><a href="about.html" class="mob-link">About</a></li><li><a href="menu.html" class="mob-link">Menu</a></li><li><a href="coffee.html" class="mob-link">Our Coffee</a></li><li><a href="gallery.html" class="mob-link">Gallery</a></li><li><a href="events.html" class="mob-link">What's On</a></li><li><a href="contact.html" class="mob-link">Contact</a></li></ul>
+</div>
+<section class="page-hero">
+  <div class="page-hero-bg"><img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/87dc7f4e-307b-4c3a-8135-6a881bc8b285/Cupping-Room+_Photos-December-53.jpg?format=1000w" alt="ONA Coffee roastery" loading="eager"></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Home</a> <span style="opacity:0.4;">—</span> Our Coffee</div>
+    <h1>Exceptional <em>Origins</em></h1>
+    <p>Direct relationships with farmers. Single-origin roasts. The story behind every cup.</p>
+  </div>
+</section>
+
+<section class="section" style="background:var(--cream-light);">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:3rem;" class="reveal">
+      <p class="section-label" style="justify-content:center;">Our Philosophy</p>
+      <h2 class="section-title">Coffee That <em>Means Something</em></h2>
+      <p style="font-size:1rem;color:var(--text-muted);font-weight:300;max-width:500px;margin:0 auto;line-height:1.8;">We don't just buy beans. We partner with farmers, understand terroir, and roast to bring out the best of each origin.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;">
+      <div class="origin-card reveal">
+        <div class="origin-icon">🌍</div>
+        <h4>Direct Trade</h4>
+        <p class="notes">We visit our farmers annually, paying above market prices, building relationships that last years, not seasons.</p>
+      </div>
+      <div class="origin-card reveal" style="transition-delay:0.1s;">
+        <div class="origin-icon">🔥</div>
+        <h4>Precision Roasting</h4>
+        <p class="notes">Every roast is profiled to the individual lot. Light, transparent roasts that let terroir and process shine through.</p>
+      </div>
+      <div class="origin-card reveal" style="transition-delay:0.2s;">
+        <div class="origin-icon">☕</div>
+        <h4>Traceability</h4>
+        <p class="notes">Ask us about today's espresso. You'll get a story — not just a blend name.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:2rem;" class="reveal">
+      <p class="section-label" style="justify-content:center;">Rotating Selection</p>
+      <h2 class="section-title">This Month's <em>Origins</em></h2>
+      <p style="font-size:0.9rem;color:var(--text-muted);margin-top:0.5rem;">Our single-origin espresso changes monthly, always featuring a different region or seasonal microlot.</p>
+    </div>
+    <div class="tasting-grid">
+      <div class="tasting-card reveal">
+        <div class="tasting-img"><img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1757486839905-XHNRK4EC1B91FP2JQIHS/DSC00983.JPG?format=800w" alt="Ethiopia Yirgacheffe" loading="lazy"></div>
+        <div class="tasting-body">
+          <div class="tasting-name">Ethiopia Yirgacheffe</div>
+          <div class="tasting-details">Fruity · Floral · Light</div>
+          <p class="tasting-desc">Jasmine, blueberry, dark chocolate. A transparent, layered origin that rewards attention.</p>
+        </div>
+      </div>
+      <div class="tasting-card reveal" style="transition-delay:0.1s;">
+        <div class="tasting-img"><img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1725236765287-LID2HMWI339BZ1LM9SU5/Cupping-Room_August-53.jpg?format=800w" alt="Colombia Huila" loading="lazy"></div>
+        <div class="tasting-body">
+          <div class="tasting-name">Colombia Huila</div>
+          <div class="tasting-details">Balanced · Sweet · Caramel</div>
+          <p class="tasting-desc">Milk chocolate, red fruit, crisp acidity. The coffee that defined specialty in Australia.</p>
+        </div>
+      </div>
+      <div class="tasting-card reveal" style="transition-delay:0.2s;">
+        <div class="tasting-img"><img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1757486799535-M9D8WH71L0KFSHZTGPJU/DSC00957.JPG?format=800w" alt="Guatemala Huehuetenango" loading="lazy"></div>
+        <div class="tasting-body">
+          <div class="tasting-name">Guatemala Huehuet.</div>
+          <div class="tasting-details">Bold · Nutty · Full</div>
+          <p class="tasting-desc">Walnut, plum, chocolate. A full-bodied origin with depth and complexity.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--cream-light);">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;">
+      <div class="reveal-left">
+        <p class="section-label">Our Process</p>
+        <h2 class="section-title">From Farm to <em>Cup</em></h2>
+        <p style="font-size:1rem;line-height:1.85;color:var(--text-secondary);font-weight:300;margin-bottom:2rem;">Every decision matters. Here's where the magic happens.</p>
+        <div class="process-step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <h4>Sourcing</h4>
+            <p>Annual visits to partner farms across Ethiopia, Colombia, Guatemala, and beyond. Cupping lots, understanding flavour potential, negotiating fair prices.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <h4>Arrival & Resting</h4>
+            <p>Green beans arrive at ONA's Canberra roastery. We rest them 2-4 weeks to allow moisture levels to stabilise before profiling.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <h4>Roasting</h4>
+            <p>Each origin is roasted individually. Light roasts highlight terroir. Medium roasts balance complexity with sweetness. Every decision documented.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">04</div>
+          <div class="step-body">
+            <h4>Resting & Extraction</h4>
+            <p>Roasted coffee rests 12-48 hours before sale. We dial espresso daily. Every cup benefits from this patience.</p>
+          </div>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1720748198702-Z4JEWBVJTOIP8O6Z6UHS/DSC06924.jpg?format=800w" alt="ONA Coffee roasting process" style="width:100%;height:600px;object-fit:cover;border-radius:10px;box-shadow:0 25px 70px var(--shadow-deep);" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--brown-dark);">
+  <div class="section-inner reveal">
+    <div style="text-align:center;color:#F5EDD8;margin-bottom:2rem;">
+      <p class="section-label" style="color:rgba(200,169,110,0.65);justify-content:center;">Part of the ONA Family</p>
+      <h2 class="section-title" style="color:#F5EDD8;"><em style="color:var(--gold);">ONA Coffee</em> Roastery</h2>
+      <p style="font-size:1rem;color:rgba(245,240,232,0.5);font-weight:300;line-height:1.85;max-width:500px;margin:0 auto;">ONA is one of Australia's most celebrated specialty roasteries. Based in Canberra, they've spent a decade building direct relationships with farmers, obsessing over roasting profiles, and advocating for quality across the industry.</p>
+    </div>
+    <div style="max-width:800px;margin:2rem auto;">
+      <a href="https://onacoffee.com.au" target="_blank" class="btn-primary">Visit ONA Coffee →</a>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="footer-top-line"></div>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/983b611c-8d00-4047-bf87-76e86a8437d8/logolarge.png?format=500w" alt="The Cupping Room" style="height:52px;width:auto;filter:brightness(0) invert(1);opacity:0.82;">
+      <p>Canberra's home of specialty coffee. Part of the ONA Coffee family. Where craft, community and flavour come together.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/thecuppingroom/" class="social-link" target="_blank">✦</a>
+        <a href="https://www.facebook.com/canberracuppingroom" class="social-link" target="_blank">f</a>
+        <a href="#" class="social-link">▷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul class="footer-links">
+        <li><a href="about.html">Our Story</a></li><li><a href="menu.html">Full Menu</a></li>
+        <li><a href="coffee.html">Our Coffee</a></li><li><a href="events.html">What's On</a></li>
+        <li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li>
+        <li><a href="admin.html">Staff Portal</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Opening Hours</h4>
+      <div class="footer-hours">
+        <div class="hour-row"><strong>Mon–Fri</strong><span>7:00–2:30pm</span></div>
+        <div class="hour-row"><strong>Sat &amp; Sun</strong><span>8:00–2:30pm</span></div>
+        <div class="hour-row"><strong>Kitchen</strong><span>Closes 2:00pm</span></div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Visit Us</h4>
+      <p class="footer-address">1/1-13 University Ave<br>Canberra ACT 2601<br><br>thecuppingroom@onacoffee.com.au</p>
+      <a href="https://maps.app.goo.gl/Y6xn2WH7eQasUKHp9" target="_blank" class="btn-primary" style="font-size:0.75rem;padding:0.6rem 1.4rem;">Get Directions →</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 The Cupping Room. All rights reserved.</p>
+    <p>Part of the ONA Coffee family · Canberra, ACT</p>
+  </div>
+  <div class="acknowledge">The Cupping Room acknowledges the traditional custodians of this country, the Ngunnawal peoples. This always was, always will be, First Nations Land.</div>
+</footer>
+
+<script>
+window.addEventListener('load',()=>{setTimeout(()=>{const l=document.getElementById('loader');if(l)l.classList.add('hidden');},1800);});
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>{const sc=window.scrollY>60;nav.classList.toggle('scrolled',sc);const logo=document.getElementById('navLogoImg');if(logo){logo.style.filter=sc?'none':'brightness(0) invert(1)';logo.style.height=sc?'34px':'42px';}const btn=document.querySelector('.nav-reserve-btn');if(btn){btn.style.color=sc?'var(--text-primary)':'var(--cream)';btn.style.borderColor=sc?'var(--brown-light)':'rgba(245,240,232,0.5)';}document.querySelector('.theme-toggle').style.color=sc?'var(--text-primary)':'var(--cream)';document.querySelectorAll('.hamburger span').forEach(s=>s.style.background=sc?'var(--text-primary)':'var(--cream)');document.querySelectorAll('.nav-links a').forEach(a=>a.style.color=sc?'var(--text-secondary)':'');const aLink=document.querySelector('.nav-links a.active-link');if(aLink)aLink.style.color=sc?'var(--brown-warm)':'var(--gold)';});
+const ham=document.getElementById('hamburger');const mob=document.getElementById('mobile-menu');
+ham.addEventListener('click',()=>{ham.classList.toggle('active');mob.classList.toggle('open');document.body.style.overflow=mob.classList.contains('open')?'hidden':'';});
+document.querySelectorAll('.mob-link').forEach(l=>l.addEventListener('click',()=>{ham.classList.remove('active');mob.classList.remove('open');document.body.style.overflow='';}));
+const tb=document.getElementById('themeToggle');let dark=false;tb.addEventListener('click',()=>{dark=!dark;document.body.setAttribute('data-theme',dark?'dark':'');tb.textContent=dark?'☀':'☾';});
+const ro=new IntersectionObserver((e)=>{e.forEach(en=>{if(en.isIntersecting){en.target.classList.add('visible');ro.unobserve(en.target);}});},{threshold:0.08,rootMargin:'0px 0px -80px 0px'});
+document.querySelectorAll('.reveal,.reveal-right,.reveal-left').forEach(el=>ro.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
+</script>
+</body>
+</html>

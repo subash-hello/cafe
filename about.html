@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>About Us — The Cupping Room</title>
+<meta name="description" content="Learn about The Cupping Room's story, team, and connection to ONA Coffee — Canberra's specialty coffee community hub.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#F5F0E8;--cream-light:#FAF7F2;--beige:#E8DECE;--brown-dark:#2C1A0E;--brown-mid:#5C3D24;--brown-warm:#8B5E3C;--brown-light:#C4956A;--green-muted:#4A5240;--green-sage:#7A8C6E;--text-primary:#2C1A0E;--text-secondary:#6B4C35;--text-muted:#9C8070;--gold:#C8A96E;--gold-light:#E2C99A;--shadow-warm:rgba(44,26,14,0.12);--shadow-deep:rgba(44,26,14,0.25);--t:0.4s cubic-bezier(0.25,0.46,0.45,0.94);--tf:0.2s cubic-bezier(0.25,0.46,0.45,0.94);}
+[data-theme="dark"]{--cream:#1C1208;--cream-light:#221608;--beige:#2E1F10;--brown-dark:#F5EDD8;--brown-mid:#E0C9A8;--brown-warm:#C4A882;--brown-light:#9A7A5C;--text-primary:#F5EDD8;--text-secondary:#C4A882;--text-muted:#8A7060;--shadow-warm:rgba(0,0,0,0.3);--shadow-deep:rgba(0,0,0,0.5);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-primary);overflow-x:hidden;transition:background var(--t),color var(--t);}
+img{display:block;max-width:100%} a{text-decoration:none;color:inherit} button{border:none;background:none;cursor:pointer;font-family:inherit}
+#loader{position:fixed;inset:0;background:#2C1A0E;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity 0.8s ease,visibility 0.8s ease;}
+#loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loader-bar{width:180px;height:1px;background:rgba(245,240,232,0.15);overflow:hidden;}
+.loader-progress{height:100%;background:var(--gold);width:0%;animation:loadBar 1.8s ease forwards;}
+@keyframes loadBar{to{width:100%}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+nav#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.4rem 4rem;display:flex;align-items:center;justify-content:space-between;transition:all 0.5s ease;}
+nav#navbar.scrolled{background:rgba(245,240,232,0.96);backdrop-filter:blur(20px);padding:0.85rem 4rem;border-bottom:1px solid rgba(139,94,60,0.1);box-shadow:0 4px 30px var(--shadow-warm);}
+[data-theme="dark"] nav#navbar.scrolled{background:rgba(28,18,8,0.96);}
+.nav-links{display:flex;align-items:center;gap:2.2rem;list-style:none;}
+.nav-links a{font-size:0.82rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:400;color:rgba(245,240,232,0.85);transition:color var(--tf);position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform var(--tf);}
+.nav-links a:hover::after,.nav-links a.active-link::after{transform:scaleX(1)}
+.nav-links a:hover{color:var(--gold-light)} .nav-links a.active-link{color:var(--gold);}
+nav#navbar.scrolled .nav-links a{color:var(--text-secondary);}
+nav#navbar.scrolled .nav-links a:hover,.nav#navbar.scrolled .nav-links a.active-link{color:var(--brown-warm);}
+.nav-right{display:flex;align-items:center;gap:1.25rem;}
+.nav-reserve-btn{padding:0.55rem 1.4rem;border:1px solid rgba(245,240,232,0.5);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream);border-radius:100px;transition:all var(--tf);}
+.nav-reserve-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--brown-dark);}
+nav#navbar.scrolled .nav-reserve-btn{color:var(--text-primary);border-color:var(--brown-light);}
+.theme-toggle{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--cream);transition:all var(--tf);font-size:1rem;}
+nav#navbar.scrolled .theme-toggle{color:var(--text-primary);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--cream);transition:all var(--tf);}
+nav#navbar.scrolled .hamburger span{background:var(--text-primary);}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
+.hamburger.active span:nth-child(2){opacity:0;transform:translateX(-10px)}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+#mobile-menu{position:fixed;inset:0;z-index:999;background:#2C1A0E;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;opacity:0;visibility:hidden;transition:all 0.5s cubic-bezier(0.77,0,0.175,1);transform:translateY(-20px);}
+#mobile-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+.mobile-nav-links{list-style:none;text-align:center;}
+.mobile-nav-links li{margin:0.75rem 0;}
+.mobile-nav-links a{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--cream);letter-spacing:0.05em;display:block;opacity:0;transform:translateY(30px);transition:opacity 0.5s ease,transform 0.5s ease,color 0.2s ease;}
+#mobile-menu.open .mobile-nav-links a{opacity:1;transform:translateY(0)}
+#mobile-menu.open .mobile-nav-links li:nth-child(1) a{transition-delay:0.1s}#mobile-menu.open .mobile-nav-links li:nth-child(2) a{transition-delay:0.15s}#mobile-menu.open .mobile-nav-links li:nth-child(3) a{transition-delay:0.2s}#mobile-menu.open .mobile-nav-links li:nth-child(4) a{transition-delay:0.25s}#mobile-menu.open .mobile-nav-links li:nth-child(5) a{transition-delay:0.3s}#mobile-menu.open .mobile-nav-links li:nth-child(6) a{transition-delay:0.35s}#mobile-menu.open .mobile-nav-links li:nth-child(7) a{transition-delay:0.4s}
+.mobile-nav-links a:hover{color:var(--gold)}
+.section{padding:8rem 4rem}.section-inner{max-width:1300px;margin:0 auto}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s ease,transform 0.8s ease;}.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity 0.8s ease,transform 0.8s ease;}.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity 0.8s ease,transform 0.8s ease;}.reveal-right.visible{opacity:1;transform:translateX(0)}
+.section-label{font-size:0.75rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);font-weight:400;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
+.section-label::before{content:'';width:30px;height:1px;background:var(--gold);}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:300;line-height:1.15;color:var(--text-primary);margin-bottom:1.5rem;}
+.section-title em{font-style:italic;color:var(--brown-warm)}
+.btn-primary{padding:0.95rem 2.4rem;background:var(--gold);color:var(--brown-dark);font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;border-radius:100px;transition:all var(--tf);display:inline-block;border:none;cursor:pointer;}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 30px rgba(200,169,110,0.4);}
+.btn-outline-dark{padding:0.95rem 2.4rem;border:1px solid var(--beige);color:var(--text-secondary);font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;border-radius:100px;transition:all var(--tf);display:inline-block;cursor:pointer;}
+.btn-outline-dark:hover{background:var(--brown-dark);color:var(--cream);border-color:var(--brown-dark);transform:translateY(-2px);}
+/* PAGE HERO */
+.page-hero{position:relative;height:70vh;min-height:520px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.page-hero-bg{position:absolute;inset:0;overflow:hidden;}
+.page-hero-bg img{width:100%;height:100%;object-fit:cover;}
+.page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(28,18,8,0.4) 0%,rgba(28,18,8,0.65) 60%,rgba(28,18,8,0.9) 100%);pointer-events:none;}
+.page-hero-content{position:relative;z-index:2;text-align:center;padding:0 2rem;max-width:800px;}
+.breadcrumb{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.45);margin-bottom:1.25rem;display:flex;align-items:center;justify-content:center;gap:0.75rem;}
+.breadcrumb a{color:rgba(245,240,232,0.45);transition:color 0.2s;} .breadcrumb a:hover{color:var(--gold);}
+.page-hero-content h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,6rem);font-weight:300;color:var(--cream);line-height:1.05;margin-bottom:1rem;animation:fadeInUp 0.9s ease 0.3s both;}
+.page-hero-content h1 em{font-style:italic;color:var(--gold-light);}
+.page-hero-content .hero-sub{font-size:1.05rem;color:rgba(245,240,232,0.68);font-weight:300;line-height:1.8;animation:fadeInUp 0.9s ease 0.55s both;}
+.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.6rem;cursor:pointer;z-index:5;}
+.hero-scroll span{font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,232,0.5);}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,rgba(200,169,110,0.8),transparent);animation:scrollPulse 2s ease infinite;}
+@keyframes scrollPulse{0%{transform:scaleY(0);transform-origin:top;opacity:1}50%{transform:scaleY(1);transform-origin:top;opacity:1}100%{transform:scaleY(1);transform-origin:bottom;opacity:0}}
+/* ABOUT-SPECIFIC */
+.about-intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.stacked-imgs{position:relative;height:580px;}
+.img-main{position:absolute;top:0;right:0;width:78%;height:450px;object-fit:cover;border-radius:6px;box-shadow:0 25px 70px var(--shadow-deep);}
+.img-accent{position:absolute;bottom:0;left:0;width:55%;height:280px;object-fit:cover;border-radius:6px;box-shadow:0 20px 55px var(--shadow-deep);border:5px solid var(--cream-light);}
+.img-badge{position:absolute;top:38%;right:-18px;width:95px;height:95px;background:var(--gold);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;box-shadow:0 8px 30px rgba(200,169,110,0.45);}
+.img-badge strong{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:#2C1A0E;line-height:1;}
+.img-badge small{font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:#5C3D24;text-align:center;}
+.about-text p{font-size:1.02rem;line-height:1.85;color:var(--text-secondary);margin-bottom:1.25rem;font-weight:300;}
+.about-sig{font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-style:italic;color:var(--brown-warm);margin-top:1.5rem;margin-bottom:2rem;}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:4rem;}
+.value-card{padding:2.5rem 2rem;background:var(--cream-light);border:1px solid rgba(139,94,60,0.08);border-radius:12px;text-align:center;transition:all var(--tf);}
+.value-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px var(--shadow-warm);border-color:rgba(200,169,110,0.2);}
+.value-icon{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--brown-warm));display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-size:1.4rem;}
+.value-card h4{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:400;color:var(--text-primary);margin-bottom:0.6rem;}
+.value-card p{font-size:0.88rem;line-height:1.7;color:var(--text-muted);font-weight:300;}
+.timeline{position:relative;padding-left:3rem;margin-top:4rem;}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--gold),transparent);}
+.timeline-item{position:relative;padding-bottom:3rem;}
+.timeline-item::before{content:'';position:absolute;left:-3.4rem;top:4px;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid var(--cream);box-shadow:0 0 0 3px rgba(200,169,110,0.25);}
+.timeline-year{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;color:var(--gold);letter-spacing:0.1em;margin-bottom:0.4rem;}
+.timeline-item h4{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:var(--text-primary);margin-bottom:0.4rem;}
+.timeline-item p{font-size:0.9rem;line-height:1.7;color:var(--text-muted);font-weight:300;max-width:500px;}
+.community-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:4rem;}
+.community-img{border-radius:8px;overflow:hidden;aspect-ratio:3/4;}
+.community-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;}
+.community-img:hover img{transform:scale(1.05)}
+.ona-section{background:#2C1A0E;padding:8rem 4rem;position:relative;overflow:hidden;}
+.ona-section::before{content:'';position:absolute;inset:0;background:url('https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1750660295396-3IS5BYM38BPAL84UCK83/DSC05657.JPG?format=800w') center/cover;opacity:0.07;}
+.ona-inner{max-width:1300px;margin:0 auto;position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.ona-text .section-label{color:rgba(200,169,110,0.65);}
+.ona-text .section-label::before{background:rgba(200,169,110,0.65);}
+.ona-text h2{color:#F5EDD8;}
+.ona-text h2 em{color:var(--gold);}
+.ona-text p{font-size:1rem;line-height:1.85;color:rgba(245,240,232,0.5);font-weight:300;margin-bottom:1rem;}
+.ona-img{border-radius:8px;overflow:hidden;height:500px;box-shadow:0 30px 80px rgba(0,0,0,0.4);}
+.ona-img img{width:100%;height:100%;object-fit:cover;}
+/* FOOTER */
+footer{background:#2C1A0E;padding:5rem 4rem 2rem;}
+.footer-top-line{height:1px;background:linear-gradient(to right,transparent,rgba(200,169,110,0.45),transparent);margin-bottom:4rem;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:4rem;max-width:1300px;margin:0 auto;}
+.footer-brand p{font-size:0.87rem;line-height:1.75;color:rgba(245,240,232,0.4);font-weight:300;margin-top:0.75rem;margin-bottom:1.5rem;max-width:280px;}
+.footer-social{display:flex;gap:0.7rem;}
+.social-link{width:36px;height:36px;border:1px solid rgba(200,169,110,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;color:rgba(245,240,232,0.42);transition:all var(--tf);}
+.social-link:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);}
+.footer-col h4{font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);font-weight:400;margin-bottom:1.5rem;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:0.7rem;}
+.footer-links li a{font-size:0.87rem;color:rgba(245,240,232,0.4);transition:color var(--tf);font-weight:300;}
+.footer-links li a:hover{color:var(--cream);}
+.footer-hours{display:flex;flex-direction:column;gap:0.45rem;}
+.hour-row{display:flex;justify-content:space-between;font-size:0.82rem;font-weight:300;color:rgba(245,240,232,0.4);padding-bottom:0.45rem;border-bottom:1px solid rgba(200,169,110,0.07);}
+.hour-row:last-child{border-bottom:none} .hour-row strong{color:rgba(245,240,232,0.62);font-weight:400;}
+.footer-address{font-size:0.84rem;line-height:1.8;color:rgba(245,240,232,0.4);font-weight:300;margin-bottom:1.2rem;}
+.footer-bottom{max-width:1300px;margin:3.5rem auto 0;padding-top:2rem;border-top:1px solid rgba(200,169,110,0.1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-bottom p{font-size:0.78rem;color:rgba(245,240,232,0.2);font-weight:300;}
+.acknowledge{max-width:1300px;margin:2rem auto 0;padding:1.5rem 0;border-top:1px solid rgba(200,169,110,0.06);font-size:0.75rem;line-height:1.7;color:rgba(245,240,232,0.18);font-weight:300;font-style:italic;text-align:center;}
+@media(max-width:1024px){.section{padding:6rem 2.5rem}nav#navbar{padding:1.2rem 2.5rem}nav#navbar.scrolled{padding:0.85rem 2.5rem}footer{padding:4rem 2.5rem 2rem}.footer-grid{grid-template-columns:1fr 1fr;gap:3rem}}
+@media(max-width:900px){.about-intro-grid,.ona-inner{grid-template-columns:1fr;gap:3rem}.values-grid{grid-template-columns:1fr 1fr}.community-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.nav-links,.nav-reserve-btn{display:none}.hamburger{display:flex}.section{padding:5rem 1.5rem}footer{padding:3.5rem 1.5rem 2rem}.footer-grid{grid-template-columns:1fr;gap:2.5rem}nav#navbar{padding:1rem 1.5rem}nav#navbar.scrolled{padding:0.75rem 1.5rem}.stacked-imgs{height:380px}.img-main{height:320px}.img-accent{height:180px}.values-grid{grid-template-columns:1fr}.ona-section{padding:5rem 1.5rem}}
+*:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px;}
+</style>
+</head>
+<body>
+<div id="loader" style="background:#2C1A0E;">
+  <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/d1c826e5-faf1-470e-a2aa-b969b54078cf/logo.png?format=300w" alt="The Cupping Room" style="height:60px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:0.9;animation:fadeInUp 0.7s ease forwards;">
+  <div class="loader-bar"><div class="loader-progress"></div></div>
+</div>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/d1c826e5-faf1-470e-a2aa-b969b54078cf/logo.png?format=300w" alt="The Cupping Room" style="height:42px;width:auto;object-fit:contain;filter:brightness(0) invert(1);transition:filter 0.4s ease,height 0.4s ease;" id="navLogoImg">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active-link">About</a></li>
+    <li><a href="menu.html">Menu</a></li>
+    <li><a href="coffee.html">Our Coffee</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="events.html">What's On</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☾</button>
+    <a href="contact.html" class="nav-reserve-btn">Reserve</a>
+    <div class="hamburger" id="hamburger" role="button" aria-label="Open menu" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+<div id="mobile-menu">
+  <ul class="mobile-nav-links">
+    <li><a href="index.html" class="mob-link">Home</a></li>
+    <li><a href="about.html" class="mob-link">About</a></li>
+    <li><a href="menu.html" class="mob-link">Menu</a></li>
+    <li><a href="coffee.html" class="mob-link">Our Coffee</a></li>
+    <li><a href="gallery.html" class="mob-link">Gallery</a></li>
+    <li><a href="events.html" class="mob-link">What's On</a></li>
+    <li><a href="contact.html" class="mob-link">Contact</a></li>
+  </ul>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-bg">
+    <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/87dc7f4e-307b-4c3a-8135-6a881bc8b285/Cupping-Room+_Photos-December-53.jpg?format=1000w" alt="The Cupping Room interior" loading="eager">
+  </div>
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Home</a> <span style="opacity:0.4;">—</span> About</div>
+    <h1>Our <em>Story</em></h1>
+    <p class="hero-sub">A community built on craft, connection,<br>and the love of exceptional coffee.</p>
+  </div>
+  <div class="hero-scroll" onclick="document.getElementById('story').scrollIntoView({behavior:'smooth'})">
+    <span>Scroll</span><div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div style="padding:1.75rem 0;background:#2C1A0E;overflow:hidden;border-top:1px solid rgba(200,169,110,0.15);border-bottom:1px solid rgba(200,169,110,0.15);">
+  <div style="display:flex;gap:4rem;width:max-content;animation:marquee 30s linear infinite;">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;color:rgba(245,240,232,0.42);letter-spacing:0.12em;white-space:nowrap;display:flex;align-items:center;gap:4rem;">
+      ONA Coffee Family <span style="color:var(--gold);font-size:0.55rem;">✦</span> Specialty Roasters <span style="color:var(--gold);font-size:0.55rem;">✦</span> Canberra Community <span style="color:var(--gold);font-size:0.55rem;">✦</span> Seasonal Menu <span style="color:var(--gold);font-size:0.55rem;">✦</span> Direct Trade Coffee <span style="color:var(--gold);font-size:0.55rem;">✦</span> Award Winning <span style="color:var(--gold);font-size:0.55rem;">✦</span> ACT Local <span style="color:var(--gold);font-size:0.55rem;">✦</span>
+      ONA Coffee Family <span style="color:var(--gold);font-size:0.55rem;">✦</span> Specialty Roasters <span style="color:var(--gold);font-size:0.55rem;">✦</span> Canberra Community <span style="color:var(--gold);font-size:0.55rem;">✦</span> Seasonal Menu <span style="color:var(--gold);font-size:0.55rem;">✦</span> Direct Trade Coffee <span style="color:var(--gold);font-size:0.55rem;">✦</span> Award Winning <span style="color:var(--gold);font-size:0.55rem;">✦</span> ACT Local <span style="color:var(--gold);font-size:0.55rem;">✦</span>
+    </div>
+  </div>
+</div>
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+<!-- STORY SECTION -->
+<section class="section" id="story" style="background:var(--cream-light);">
+  <div class="section-inner">
+    <div class="about-intro-grid">
+      <div class="stacked-imgs reveal-left">
+        <img class="img-main" src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1750660251981-F7ACTKIDP12U30HOTIZK/DSC05596.JPG?format=800w" alt="The Cupping Room cafe interior" loading="lazy">
+        <img class="img-accent" src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1750660227904-VCUX8U1WMUEOEIGITW0B/DSC05561.JPG?format=800w" alt="Coffee being prepared" loading="lazy">
+        <div class="img-badge">
+          <strong>ONA</strong>
+          <small>Coffee<br>Family</small>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <p class="section-label">Who We Are</p>
+        <h2 class="section-title">Welcome to<br>The <em>Cupping Room</em></h2>
+        <div class="about-text">
+          <p>Nestled in the heart of Canberra's University Ave, The Cupping Room is a gathering place for coffee lovers, brunch enthusiasts, and anyone who appreciates something made with genuine care. Following a thoughtful renovation, we've welcomed a fresh chapter while staying true to everything that made us a community favourite.</p>
+          <p>We are a proud part of the ONA Coffee family — one of Australia's most celebrated specialty roasters. That means every espresso, every filter, every carefully steamed milk is built on a foundation of direct relationships with farmers across the world's great coffee-growing regions.</p>
+          <p>Our seasonal brunch menu evolves with Australia's produce calendar, complementing our coffee with dishes that are honest, delicious, and unforgettable. From your morning flat white to a long Sunday shakshuka, we're here to make your visit worth lingering over.</p>
+        </div>
+        <div class="about-sig">— The Cupping Room Team</div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <a href="menu.html" class="btn-primary">View Our Menu</a>
+          <a href="coffee.html" class="btn-outline-dark">Our Coffee</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section" style="background:var(--cream);">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:1rem;" class="reveal">
+      <p class="section-label" style="justify-content:center;">What Drives Us</p>
+      <h2 class="section-title">Our <em>Values</em></h2>
+      <p style="font-size:1rem;color:var(--text-muted);font-weight:300;max-width:420px;margin:0 auto;line-height:1.8;">Three principles that guide everything we do — from how we source our beans to how we welcome you through the door.</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal">
+        <div class="value-icon">☕</div>
+        <h4>Craft Without Compromise</h4>
+        <p>Every variable matters. We dial in our espresso daily, source our beans with obsessive care, and train our baristas to championship standard — because great coffee demands it.</p>
+      </div>
+      <div class="value-card reveal" style="transition-delay:0.1s;">
+        <div class="value-icon">🌿</div>
+        <h4>Community First</h4>
+        <p>The Cupping Room exists because of Canberra. We invest in local producers, support our neighbourhood, and create a space where everyone feels genuinely welcome.</p>
+      </div>
+      <div class="value-card reveal" style="transition-delay:0.2s;">
+        <div class="value-icon">🌍</div>
+        <h4>Transparency &amp; Sustainability</h4>
+        <p>We know our farmers by name. We pay above market prices. We believe the story behind a coffee is as important as what's in the cup — and we'll share it freely.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="section" style="background:var(--cream-light);">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;">
+      <div class="reveal-left">
+        <p class="section-label">How We Got Here</p>
+        <h2 class="section-title">A <em>Decade</em> of<br>Shared Moments</h2>
+        <p style="font-size:1rem;line-height:1.85;color:var(--text-secondary);font-weight:300;margin-bottom:2rem;">From a small espresso bar to a landmark Canberra café — each year has brought new friendships, new coffees, and new reasons to gather.</p>
+        <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1740623268218-CXOEIZZ54PF1F24FKXJW/Cupping-Room+_Photos-December-24.jpg?format=800w" alt="Cupping Room through the years" style="width:100%;height:320px;object-fit:cover;border-radius:8px;box-shadow:0 20px 50px var(--shadow-deep);" loading="lazy">
+      </div>
+      <div class="timeline reveal-right">
+        <div class="timeline-item">
+          <div class="timeline-year">2012</div>
+          <h4>The First Pour</h4>
+          <p>The Cupping Room opens its doors on University Ave as part of the ONA Coffee family — with a small menu and a big vision for specialty coffee in Canberra.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2015</div>
+          <h4>Growing the Community</h4>
+          <p>Expanded seating, a new seasonal brunch menu, and the start of our first public cupping sessions draw regulars from across the ACT.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2018</div>
+          <h4>Barista Championship Recognition</h4>
+          <p>Our team begins competing nationally, bringing home medals and a new level of craft to everything we serve at the counter.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2022</div>
+          <h4>The Renovation</h4>
+          <p>A thoughtful redesign transforms the space — warm timbers, considered lighting, and a layout built around the flow of community life.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2024</div>
+          <h4>The Next Chapter</h4>
+          <p>A fresh look, an expanded events programme, and the same familiar faces behind the bar. The best is still to come.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ONA CONNECTION -->
+<section class="ona-section">
+  <div class="ona-inner">
+    <div class="ona-text reveal-left">
+      <p class="section-label">Our Coffee Family</p>
+      <h2 class="section-title" style="color:#F5EDD8;">Part of the<br><em>ONA Legacy</em></h2>
+      <p>ONA Coffee is one of Australia's most lauded specialty roasteries, with a worldwide reputation built on direct relationships with farmers, obsessive attention to quality, and a genuine passion for the stories behind every bean.</p>
+      <p>As part of the ONA family, The Cupping Room has access to some of the most extraordinary lots on the planet — coffees from Ethiopia's highlands, Colombia's micro-lots, and beyond — roasted metres away at ONA's Canberra roastery.</p>
+      <p>This connection means you're never more than a few steps from the source. Every cup carries that lineage.</p>
+      <a href="coffee.html" class="btn-primary" style="margin-top:1rem;">Explore Our Coffee →</a>
+    </div>
+    <div class="ona-img reveal-right">
+      <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1725236765287-LID2HMWI339BZ1LM9SU5/Cupping-Room_August-53.jpg?format=800w" alt="ONA Coffee barista crafting espresso" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY PHOTOS -->
+<section class="section" style="background:var(--cream);">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:1rem;" class="reveal">
+      <p class="section-label" style="justify-content:center;">Life Here</p>
+      <h2 class="section-title">The <em>People</em> Behind the Cup</h2>
+    </div>
+    <div class="community-grid">
+      <div class="community-img reveal"><img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1725236757674-9OTEY51O5N9VOVBOR0AD/Cupping-Room_August-23.jpg?format=800w" alt="Cupping Room community" loading="lazy"></div>
+      <div class="community-img reveal" style="transition-delay:0.1s;"><img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1750660389493-JT14R3NFNIWE2XNWSWIG/DSC05878.JPG?format=800w" alt="Barista at work" loading="lazy"></div>
+      <div class="community-img reveal" style="transition-delay:0.2s;"><img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1725236761248-95VE3QXFVQ7CDHLP3HV7/Cupping-Room_August-25.jpg?format=800w" alt="Coffee and community" loading="lazy"></div>
+      <div class="community-img reveal" style="transition-delay:0.3s;"><img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1725236733971-4VVX4EA5WKI8PQZG62AM/Cupping-Room_August-1.jpg?format=800w" alt="Guests enjoying brunch" loading="lazy"></div>
+    </div>
+    <div style="text-align:center;margin-top:3rem;" class="reveal">
+      <a href="gallery.html" class="btn-outline-dark">View Full Gallery →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top-line"></div>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/983b611c-8d00-4047-bf87-76e86a8437d8/logolarge.png?format=500w" alt="The Cupping Room" style="height:52px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:0.82;">
+      <p>Canberra's home of specialty coffee. Part of the ONA Coffee family. Where craft, community and flavour come together.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/thecuppingroom/" class="social-link" target="_blank">✦</a>
+        <a href="https://www.facebook.com/canberracuppingroom" class="social-link" target="_blank">f</a>
+        <a href="#" class="social-link">▷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul class="footer-links">
+        <li><a href="about.html">Our Story</a></li><li><a href="menu.html">Full Menu</a></li>
+        <li><a href="coffee.html">Our Coffee</a></li><li><a href="events.html">What's On</a></li>
+        <li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li>
+        <li><a href="admin.html">Staff Portal</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Opening Hours</h4>
+      <div class="footer-hours">
+        <div class="hour-row"><strong>Mon–Fri</strong><span>7:00–2:30pm</span></div>
+        <div class="hour-row"><strong>Sat &amp; Sun</strong><span>8:00–2:30pm</span></div>
+        <div class="hour-row"><strong>Kitchen</strong><span>Closes 2:00pm</span></div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Visit Us</h4>
+      <p class="footer-address">1/1-13 University Ave<br>Canberra ACT 2601<br><br>thecuppingroom@onacoffee.com.au</p>
+      <a href="https://maps.app.goo.gl/Y6xn2WH7eQasUKHp9" target="_blank" class="btn-primary" style="font-size:0.75rem;padding:0.6rem 1.4rem;">Get Directions →</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 The Cupping Room. All rights reserved.</p>
+    <p>Part of the ONA Coffee family · Canberra, ACT</p>
+  </div>
+  <div class="acknowledge">The Cupping Room acknowledges the traditional custodians of this country, the Ngunnawal peoples. We pay our respects to elders past, present and emerging. This always was, always will be, First Nations Land.</div>
+</footer>
+
+<script>
+window.addEventListener('load',()=>{setTimeout(()=>{const l=document.getElementById('loader');if(l)l.classList.add('hidden');},1800);});
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{const sc=window.scrollY>60;navbar.classList.toggle('scrolled',sc);const logo=document.getElementById('navLogoImg');if(logo){logo.style.filter=sc?'none':'brightness(0) invert(1)';logo.style.height=sc?'34px':'42px';}const btn=document.querySelector('.nav-reserve-btn');if(btn){btn.style.color=sc?'var(--text-primary)':'var(--cream)';btn.style.borderColor=sc?'var(--brown-light)':'rgba(245,240,232,0.5)';}const tt=document.querySelector('.theme-toggle');if(tt)tt.style.color=sc?'var(--text-primary)':'var(--cream)';const hs=document.querySelectorAll('.hamburger span');hs.forEach(s=>s.style.background=sc?'var(--text-primary)':'var(--cream)');const navLinks=document.querySelectorAll('.nav-links a');navLinks.forEach(a=>a.style.color=sc?'var(--text-secondary)':'');const aLink=document.querySelector('.nav-links a.active-link');if(aLink)aLink.style.color=sc?'var(--brown-warm)':'var(--gold)';});
+const ham=document.getElementById('hamburger');const mob=document.getElementById('mobile-menu');
+ham.addEventListener('click',()=>{ham.classList.toggle('active');mob.classList.toggle('open');document.body.style.overflow=mob.classList.contains('open')?'hidden':'';}); 
+document.querySelectorAll('.mob-link').forEach(l=>l.addEventListener('click',()=>{ham.classList.remove('active');mob.classList.remove('open');document.body.style.overflow='';}) );
+const tb=document.getElementById('themeToggle');let dark=false;
+tb.addEventListener('click',()=>{dark=!dark;document.body.setAttribute('data-theme',dark?'dark':'');tb.textContent=dark?'☀':'☾';});
+const ro=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}})},{threshold:0.08,rootMargin:'0px 0px -80px 0px'});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>ro.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
+</script>
+</body></html>

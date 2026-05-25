@@ -1,0 +1,1917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — The Cupping Room</title>
+<meta name="description" content="Admin panel for managing bookings, inquiries, and workshop registrations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F5F0E8;
+  --cream-light: #FAF7F2;
+  --beige: #E8DECE;
+  --brown-dark: #2C1A0E;
+  --brown-mid: #5C3D24;
+  --brown-warm: #8B5E3C;
+  --brown-light: #C4956A;
+  --green-muted: #4A5240;
+  --green-sage: #7A8C6E;
+  --text-primary: #2C1A0E;
+  --text-secondary: #6B4C35;
+  --text-muted: #9C8070;
+  --gold: #C8A96E;
+  --gold-light: #E2C99A;
+  --shadow: rgba(44, 26, 14, 0.1);
+  --red: #D64545;
+  --green: #3A8B5A;
+  --t: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+[data-theme="dark"] {
+  --cream: #1C1208;
+  --cream-light: #221608;
+  --beige: #2E1F10;
+  --brown-dark: #F5EDD8;
+  --brown-mid: #E0C9A8;
+  --brown-warm: #C4A882;
+  --brown-light: #9A7A5C;
+  --green-muted: #8A9C7A;
+  --green-sage: #B8C9A4;
+  --text-primary: #F5EDD8;
+  --text-secondary: #C4A882;
+  --text-muted: #8A7060;
+  --shadow: rgba(0,0,0,0.35);
+  --red: #E26363;
+  --green: #4FB076;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text-primary);
+}
+
+/* LOGIN PAGE */
+#loginPage {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown-mid) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#loginPage.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.login-box {
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 3rem 2.5rem;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 30px 80px rgba(44, 26, 14, 0.3);
+  animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.login-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  text-align: center;
+  color: var(--brown-dark);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.1em;
+}
+
+.login-subtitle {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid var(--beige);
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  transition: border-color var(--t);
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: var(--gold);
+  background: #fff;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 0.95rem;
+  background: var(--gold);
+  color: var(--brown-dark);
+  border: none;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--t);
+}
+
+.login-btn:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+.login-error {
+  color: var(--red);
+  font-size: 0.85rem;
+  margin-top: 1rem;
+  text-align: center;
+  display: none;
+}
+
+.login-error.show {
+  display: block;
+}
+
+/* DASHBOARD LAYOUT */
+#adminLayout {
+  display: none;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  grid-template-rows: 70px 1fr;
+}
+
+#adminLayout.active {
+  display: grid;
+}
+
+/* HEADER */
+.admin-header {
+  background: var(--cream-light);
+  border-bottom: 1px solid var(--beige);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-column: 1 / -1;
+  box-shadow: 0 2px 10px var(--shadow);
+}
+
+.header-left {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--brown-dark);
+  letter-spacing: 0.1em;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.admin-name {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.logout-btn {
+  padding: 0.55rem 1.4rem;
+  background: var(--red);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--t);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+}
+
+.logout-btn:hover {
+  background: #b83a3a;
+  transform: translateY(-2px);
+}
+
+/* SIDEBAR */
+.admin-sidebar {
+  background: var(--brown-dark);
+  padding: 2rem 0;
+  overflow-y: auto;
+  border-right: 1px solid rgba(200, 169, 110, 0.2);
+}
+
+.nav-section {
+  padding: 1.5rem 0;
+}
+
+.nav-section-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.4);
+  padding: 0 1.75rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1.5rem;
+  color: rgba(245, 240, 232, 0.6);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all var(--t);
+  border-left: 3px solid transparent;
+}
+
+.nav-link:hover {
+  color: var(--gold);
+  background: rgba(200, 169, 110, 0.1);
+  border-left-color: var(--gold);
+}
+
+.nav-link.active {
+  color: var(--gold);
+  background: rgba(200, 169, 110, 0.15);
+  border-left-color: var(--gold);
+}
+
+.nav-icon {
+  font-size: 1.1rem;
+  width: 20px;
+}
+
+/* MAIN CONTENT */
+.admin-main {
+  overflow-y: auto;
+  padding: 2rem;
+  background: var(--cream);
+}
+
+/* SECTIONS */
+.admin-section {
+  display: none;
+}
+
+.admin-section.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+}
+
+/* STATS CARDS */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background: var(--cream-light);
+  border-radius: 12px;
+  padding: 1.75rem;
+  border: 1px solid var(--beige);
+  box-shadow: 0 2px 10px var(--shadow);
+  transition: all var(--t);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px var(--shadow);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--brown-warm);
+  line-height: 1;
+}
+
+.stat-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  background: rgba(200, 169, 110, 0.12);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: var(--gold);
+  margin-top: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+/* TABLES */
+.admin-table {
+  background: var(--cream-light);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--beige);
+  box-shadow: 0 2px 10px var(--shadow);
+  margin-bottom: 2rem;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: var(--brown-dark);
+  color: var(--cream);
+  padding: 1.25rem;
+  text-align: left;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(44, 26, 14, 0.2);
+}
+
+td {
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--beige);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+tbody tr:hover {
+  background: rgba(200, 169, 110, 0.05);
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.35rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.status-pending {
+  background: rgba(255, 180, 0, 0.15);
+  color: #D68910;
+}
+
+.status-confirmed {
+  background: rgba(58, 139, 90, 0.15);
+  color: var(--green);
+}
+
+.status-cancelled {
+  background: rgba(214, 69, 69, 0.15);
+  color: var(--red);
+}
+
+.status-new {
+  background: rgba(200, 169, 110, 0.15);
+  color: var(--gold);
+}
+
+.status-read {
+  background: rgba(156, 128, 112, 0.1);
+  color: var(--text-muted);
+}
+
+/* ACTIONS */
+.action-btn {
+  padding: 0.4rem 0.75rem;
+  background: none;
+  border: 1px solid var(--beige);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all var(--t);
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+
+.action-btn:hover {
+  background: var(--gold);
+  color: var(--brown-dark);
+  border-color: var(--gold);
+}
+
+.action-btn.delete {
+  border-color: rgba(214, 69, 69, 0.3);
+  color: var(--red);
+}
+
+.action-btn.delete:hover {
+  background: var(--red);
+  color: white;
+  border-color: var(--red);
+}
+
+/* FILTERS */
+.filter-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-input, .filter-select {
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--beige);
+  border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  transition: border-color var(--t);
+  outline: none;
+}
+
+.filter-input:focus, .filter-select:focus {
+  border-color: var(--gold);
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 2.5rem;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+  animation: slideUp 0.3s ease;
+}
+
+.modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+.modal-close {
+  float: right;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color var(--t);
+  border: none;
+  background: none;
+}
+
+.modal-close:hover {
+  color: var(--text-primary);
+}
+
+.modal-field {
+  margin-bottom: 1.25rem;
+}
+
+.modal-field label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.modal-field input, .modal-field textarea, .modal-field select {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--beige);
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color var(--t);
+}
+
+.modal-field input:focus, .modal-field textarea:focus, .modal-field select:focus {
+  border-color: var(--gold);
+  background: white;
+}
+
+.modal-field textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all var(--t);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.modal-btn.primary {
+  background: var(--gold);
+  color: var(--brown-dark);
+}
+
+.modal-btn.primary:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+.modal-btn.secondary {
+  background: var(--beige);
+  color: var(--text-primary);
+}
+
+.modal-btn.secondary:hover {
+  background: rgba(200, 169, 110, 0.2);
+}
+
+/* ALERTS */
+.alert {
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  display: none;
+  animation: slideDown 0.3s ease;
+}
+
+.alert.show {
+  display: block;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.alert-success {
+  background: rgba(58, 139, 90, 0.12);
+  border-left: 4px solid var(--green);
+  color: var(--green);
+}
+
+.alert-error {
+  background: rgba(214, 69, 69, 0.12);
+  border-left: 4px solid var(--red);
+  color: var(--red);
+}
+
+.alert-info {
+  background: rgba(200, 169, 110, 0.12);
+  border-left: 4px solid var(--gold);
+  color: var(--gold);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  #dashboard {
+    grid-template-columns: 1fr;
+  }
+  
+  .admin-sidebar {
+    position: fixed;
+    left: 0;
+    top: 70px;
+    width: 100%;
+    max-height: calc(100vh - 70px);
+    display: none;
+    flex-direction: row;
+    padding: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--beige);
+    z-index: 100;
+    background: var(--cream-light);
+  }
+  
+  .admin-sidebar.active {
+    display: flex;
+  }
+  
+  .nav-section {
+    padding: 1rem 1.5rem;
+    border-right: 1px solid var(--beige);
+  }
+  
+  .admin-main {
+    margin-top: 0;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .filter-bar {
+    flex-direction: column;
+  }
+  
+  .table-scroll {
+    font-size: 0.8rem;
+  }
+  
+  .modal-content {
+    padding: 1.5rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage">
+  <div class="login-box">
+    <div class="login-logo">Admin Panel</div>
+    <div class="login-subtitle">The Cupping Room</div>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Enter your username">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter your password">
+    </div>
+    <button class="login-btn" onclick="handleLogin()">Login</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD LAYOUT -->
+<div id="adminLayout">
+  <!-- HEADER -->
+  <div class="admin-header">
+    <div class="header-left">The Cupping Room — Admin</div>
+    <div class="header-right">
+      <button class="theme-toggle" id="themeToggle" style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text-primary);transition:all var(--t);font-size:1.1rem;border:none;background:none;cursor:pointer;margin-right:1rem;">☾</button>
+      <div class="admin-name">Welcome, <strong id="adminUsername">Admin</strong></div>
+      <button class="logout-btn" onclick="handleLogout()">Logout</button>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="admin-sidebar">
+    <div class="nav-section">
+      <div class="nav-link active" onclick="switchSection('dashboard')">
+        <span class="nav-icon">📊</span>
+        <span>Dashboard</span>
+      </div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">Manage</div>
+      <div class="nav-link" onclick="switchSection('bookings')">
+        <span class="nav-icon">📅</span>
+        <span>Bookings</span>
+      </div>
+      <div class="nav-link" onclick="switchSection('inquiries')">
+        <span class="nav-icon">✉️</span>
+        <span>Inquiries</span>
+      </div>
+      <div class="nav-link" onclick="switchSection('workshops')">
+        <span class="nav-icon">🎓</span>
+        <span>Workshops</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="admin-main">
+    <!-- DASHBOARD SECTION -->
+    <div id="dashboard" class="admin-section active">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
+        <h1 class="section-title" style="margin-bottom:0;">Dashboard</h1>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <span id="localModeIndicator" style="display:none;padding:0.4rem 1rem;background:rgba(200,169,110,0.12);color:var(--gold);border:1px solid rgba(200,169,110,0.3);border-radius:100px;font-size:0.75rem;letter-spacing:0.05em;">💡 Offline Mode</span>
+          <button class="action-btn" onclick="seedMockData()" style="padding:0.6rem 1.2rem;background:var(--gold);color:var(--brown-dark);border-color:var(--gold);font-size:0.8rem;border-radius:6px;font-weight:500;margin-right:0;">🌱 Seed Mock Data</button>
+        </div>
+      </div>
+      
+      <div class="alert alert-success" id="successAlert"></div>
+      <div class="alert alert-error" id="errorAlert"></div>
+      
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card">
+          <div class="stat-label">Total Bookings</div>
+          <div class="stat-number" id="statTotalBookings">0</div>
+          <span class="stat-badge" id="statPendingBookings">0 Pending</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Today's Reservations</div>
+          <div class="stat-number" id="statTodayBookings">0</div>
+          <span class="stat-badge" id="statConfirmedBookings">0 Confirmed</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Inquiries</div>
+          <div class="stat-number" id="statTotalInquiries">0</div>
+          <span class="stat-badge" id="statNewInquiries">0 New</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Upcoming Workshops</div>
+          <div class="stat-number" id="statUpcomingWorkshops">0</div>
+          <span class="stat-badge">Registrations</span>
+        </div>
+      </div>
+
+      <!-- SVG CHARTS SECTION -->
+      <div class="charts-container" style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-top: 2rem; margin-bottom: 2rem;">
+        <div class="chart-card" style="background: var(--cream-light); border: 1px solid var(--beige); border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 10px var(--shadow);">
+          <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--text-primary); display:flex; align-items:center; gap:0.5rem;">📈 Weekly Bookings Trend</h3>
+          <div id="bookingChartContainer" style="height: 160px; display: flex; align-items: flex-end; gap: 1rem; position: relative; width: 100%;">
+            <!-- SVG chart inserted here by script -->
+          </div>
+        </div>
+        <div class="chart-card" style="background: var(--cream-light); border: 1px solid var(--beige); border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 10px var(--shadow); display: flex; flex-direction: column;">
+          <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--text-primary); display:flex; align-items:center; gap:0.5rem;">📊 Inquiry Breakdown</h3>
+          <div id="inquiryChartContainer" style="flex: 1; display: flex; align-items: center; justify-content: center; width: 100%;">
+            <!-- SVG Donut Chart inserted here by script -->
+          </div>
+        </div>
+      </div>
+
+      <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: 1rem; margin-top: 3rem;">Recent Bookings</h2>
+      <div class="admin-table">
+        <div class="table-scroll">
+          <table id="recentBookingsTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Date & Time</th>
+                <th>Guests</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: 1rem; margin-top: 3rem;">Recent Inquiries</h2>
+      <div class="admin-table">
+        <div class="table-scroll">
+          <table id="recentInquiriesTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOOKINGS SECTION -->
+    <div id="bookings" class="admin-section">
+      <h1 class="section-title">All Bookings</h1>
+      
+      <div class="filter-bar">
+        <input type="date" id="filterDate" class="filter-input" placeholder="Filter by date" onchange="filterBookings()">
+        <select id="filterStatus" class="filter-select" onchange="filterBookings()">
+          <option value="">All Status</option>
+          <option value="pending">Pending</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+        <button class="action-btn" style="margin-left: auto;" onclick="loadBookings()">Refresh</button>
+      </div>
+
+      <div class="admin-table">
+        <div class="table-scroll">
+          <table id="bookingsTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Date & Time</th>
+                <th>Guests</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- INQUIRIES SECTION -->
+    <div id="inquiries" class="admin-section">
+      <h1 class="section-title">Inquiries & Messages</h1>
+      
+      <div class="filter-bar">
+        <select id="filterInquiryStatus" class="filter-select" onchange="filterInquiries()">
+          <option value="">All Status</option>
+          <option value="new">New</option>
+          <option value="read">Read</option>
+          <option value="replied">Replied</option>
+        </select>
+        <button class="action-btn" style="margin-left: auto;" onclick="loadInquiries()">Refresh</button>
+      </div>
+
+      <div class="admin-table">
+        <div class="table-scroll">
+          <table id="inquiriesTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORKSHOPS SECTION -->
+    <div id="workshops" class="admin-section">
+      <h1 class="section-title">Workshop Registrations</h1>
+      
+      <div class="filter-bar">
+        <select id="filterWorkshopType" class="filter-select" onchange="filterWorkshops()">
+          <option value="">All Types</option>
+          <option value="espresso">Espresso Intro</option>
+          <option value="cupping">Cupping Session</option>
+          <option value="filter">Filter Brewing</option>
+          <option value="latte-art">Latte Art</option>
+        </select>
+        <button class="action-btn" style="margin-left: auto;" onclick="loadWorkshops()">Refresh</button>
+      </div>
+
+      <div class="admin-table">
+        <div class="table-scroll">
+          <table id="workshopsTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Workshop</th>
+                <th>Date</th>
+                <th>Guests</th>
+                <th>Status</th>
+                <th>Paid</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT BOOKING MODAL -->
+<div id="bookingModal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('bookingModal')">&times;</button>
+    <h2 class="modal-title">Edit Booking</h2>
+    
+    <div class="modal-field">
+      <label>Name</label>
+      <input type="text" id="modalBookingName" readonly>
+    </div>
+    <div class="modal-field">
+      <label>Email</label>
+      <input type="email" id="modalBookingEmail" readonly>
+    </div>
+    <div class="modal-field">
+      <label>Date & Time</label>
+      <input type="text" id="modalBookingDateTime" readonly>
+    </div>
+    <div class="modal-field">
+      <label>Guests</label>
+      <input type="number" id="modalBookingGuests" readonly>
+    </div>
+    <div class="modal-field">
+      <label>Status</label>
+      <select id="modalBookingStatus">
+        <option value="pending">Pending</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+    </div>
+    <div class="modal-field">
+      <label>Notes</label>
+      <textarea id="modalBookingNotes" placeholder="Add internal notes..."></textarea>
+    </div>
+    
+    <div class="modal-actions">
+      <button class="modal-btn primary" onclick="saveBooking()">Save Changes</button>
+      <button class="modal-btn secondary" onclick="closeModal('bookingModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT INQUIRY MODAL -->
+<div id="inquiryModal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('inquiryModal')">&times;</button>
+    <h2 class="modal-title">Inquiry Details</h2>
+    
+    <div class="modal-field">
+      <label>Name</label>
+      <input type="text" id="modalInquiryName" readonly>
+    </div>
+    <div class="modal-field">
+      <label>Email</label>
+      <input type="email" id="modalInquiryEmail" readonly>
+    </div>
+    <div class="modal-field">
+      <label>Type</label>
+      <input type="text" id="modalInquiryType" readonly>
+    </div>
+    <div class="modal-field">
+      <label>Message</label>
+      <textarea id="modalInquiryMessage" readonly></textarea>
+    </div>
+    <div class="modal-field">
+      <label>Status</label>
+      <select id="modalInquiryStatus">
+        <option value="new">New</option>
+        <option value="read">Read</option>
+        <option value="replied">Replied</option>
+      </select>
+    </div>
+    
+    <div class="modal-actions">
+      <button class="modal-btn primary" onclick="saveInquiry()">Update Status</button>
+      <button class="modal-btn secondary" onclick="closeModal('inquiryModal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT WORKSHOP MODAL -->
+<div id="workshopModal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('workshopModal')">&times;</button>
+    <h2 class="modal-title">Workshop Registration</h2>
+    
+    <div class="modal-field">
+      <label>Name</label>
+      <input type="text" id="modalWorkshopName" readonly>
+    </div>
+    <div class="modal-field">
+      <label>Email</label>
+      <input type="email" id="modalWorkshopEmail" readonly>
+    </div>
+    <div class="modal-field">
+      <label>Workshop Type</label>
+      <input type="text" id="modalWorkshopType" readonly>
+    </div>
+    <div class="modal-field">
+      <label>Date</label>
+      <input type="text" id="modalWorkshopDate" readonly>
+    </div>
+    <div class="modal-field">
+      <label>Guests</label>
+      <input type="number" id="modalWorkshopGuests" readonly>
+    </div>
+    <div class="modal-field">
+      <label>Status</label>
+      <select id="modalWorkshopStatus">
+        <option value="registered">Registered</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="attended">Attended</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+    </div>
+    <div class="modal-field">
+      <label>Paid</label>
+      <select id="modalWorkshopPaid">
+        <option value="false">Not Paid</option>
+        <option value="true">Paid</option>
+      </select>
+    </div>
+    
+    <div class="modal-actions">
+      <button class="modal-btn primary" onclick="saveWorkshop()">Save Changes</button>
+      <button class="modal-btn secondary" onclick="closeModal('workshopModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// API & Local Mode Configurations
+const API_URL = 'http://localhost:5000';
+let authToken = localStorage.getItem('adminToken');
+let currentEditingId = null;
+
+// LocalStorage Database Keys
+const LOCAL_BOOKINGS_KEY = 'cr_local_bookings';
+const LOCAL_INQUIRIES_KEY = 'cr_local_inquiries';
+const LOCAL_WORKSHOPS_KEY = 'cr_local_workshops';
+let isLocalMode = false;
+
+// Auto-detect server connectivity and DB timeout fails
+async function checkBackendConnection() {
+  try {
+    const response = await fetch(`${API_URL}/api/admin/profile`, {
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${authToken}` },
+      signal: AbortSignal.timeout(1800) // fast timeout to keep UX snappy
+    });
+    if (response.ok) {
+      isLocalMode = false;
+      document.getElementById('localModeIndicator').style.display = 'none';
+    } else {
+      throw new Error("API not authorized");
+    }
+  } catch (err) {
+    console.warn("⚠️ API server/database offline. Switching to Local Storage Mode.");
+    isLocalMode = true;
+    document.getElementById('localModeIndicator').style.display = 'inline-block';
+  }
+}
+
+// Local Storage Helper Utilities
+function getLocalBookings() { return JSON.parse(localStorage.getItem(LOCAL_BOOKINGS_KEY)) || []; }
+function setLocalBookings(data) { localStorage.setItem(LOCAL_BOOKINGS_KEY, JSON.stringify(data)); }
+function getLocalInquiries() { return JSON.parse(localStorage.getItem(LOCAL_INQUIRIES_KEY)) || []; }
+function setLocalInquiries(data) { localStorage.setItem(LOCAL_INQUIRIES_KEY, JSON.stringify(data)); }
+function getLocalWorkshops() { return JSON.parse(localStorage.getItem(LOCAL_WORKSHOPS_KEY)) || []; }
+function setLocalWorkshops(data) { localStorage.setItem(LOCAL_WORKSHOPS_KEY, JSON.stringify(data)); }
+
+// ============= THEME SWITCHER =============
+const themeBtn = document.getElementById('themeToggle');
+let darkMode = localStorage.getItem('adminDarkMode') === 'true';
+
+if (darkMode) {
+  document.body.setAttribute('data-theme', 'dark');
+  themeBtn.textContent = '☀';
+}
+themeBtn.addEventListener('click', () => {
+  darkMode = !darkMode;
+  document.body.setAttribute('data-theme', darkMode ? 'dark' : '');
+  themeBtn.textContent = darkMode ? '☀' : '☾';
+  localStorage.setItem('adminDarkMode', darkMode);
+});
+
+// ============= DATA SEEDING =============
+async function seedMockData() {
+  if (!isLocalMode) {
+    try {
+      const response = await fetch(`${API_URL}/api/dashboard/seed`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${authToken}` }
+      });
+      if (response.ok) {
+        showAlert('success', 'Database seeded successfully on Atlas Server!');
+        loadDashboard();
+        return;
+      }
+    } catch (e) {
+      console.warn("Database seed via API failed, seeding locally.");
+    }
+  }
+
+  // Local Seed Fallback
+  const todayStr = new Date().toISOString().split('T')[0];
+  const bookings = [
+    { _id: 'b1', name: 'Liam Neeson', email: 'liam@taken.com', phone: '+61 412 345 678', date: todayStr, time: '9:00 AM', guests: 2, status: 'confirmed', notes: 'Window table if possible.' },
+    { _id: 'b2', name: 'Emma Watson', email: 'emma@hogwarts.edu', phone: '+61 498 765 432', date: todayStr, time: '11:30 AM', guests: 4, status: 'pending', notes: 'Gluten-free menu options.' },
+    { _id: 'b3', name: 'Keanu Reeves', email: 'keanu@matrix.co', phone: '+61 455 667 788', date: todayStr, time: '1:00 PM', guests: 1, status: 'confirmed', notes: 'Just good coffee.' },
+    { _id: 'b4', name: 'Scarlett Johansson', email: 'scarlett@avengers.org', phone: '+61 422 334 455', date: new Date(Date.now() + 86400000).toISOString().split('T')[0], time: '10:00 AM', guests: 6, status: 'pending', notes: 'Birthday celebration.' },
+    { _id: 'b5', name: 'Robert Downey Jr.', email: 'rdj@stark.com', phone: '+61 477 889 900', date: new Date(Date.now() - 86400000).toISOString().split('T')[0], time: '8:00 AM', guests: 3, status: 'confirmed' }
+  ];
+  const inquiries = [
+    { _id: 'i1', name: 'Chris Evans', email: 'cap@shield.org', phone: '+61 411 222 333', subject: 'Corporate Catering', message: 'Would love to inquire about hosting a corporate brunch for 30 people on June 15th.', type: 'event', status: 'new', createdAt: new Date().toISOString() },
+    { _id: 'i2', name: 'Margot Robbie', email: 'margot@barbie.world', phone: '+61 499 000 111', subject: 'Latte Art Workshop', message: 'Hi! Is the Latte Art Masterclass suitable for absolute beginners?', type: 'general', status: 'read', createdAt: new Date().toISOString() },
+    { _id: 'i3', name: 'Chris Hemsworth', email: 'thor@asgard.com', phone: '+61 433 444 555', subject: 'Coffee feedback', message: 'The single-origin Colombia roast is out of this world. Best flat white in Canberra!', type: 'feedback', status: 'replied', createdAt: new Date().toISOString() }
+  ];
+  const workshops = [
+    { _id: 'w1', name: 'Tom Holland', email: 'spidey@web.com', phone: '+61 422 555 888', workshopType: 'espresso', date: todayStr, guests: 2, experience: 'beginner', paid: true, status: 'confirmed' },
+    { _id: 'w2', name: 'Zendaya Coleman', email: 'zendaya@euphoria.co', phone: '+61 488 999 000', workshopType: 'latte-art', date: todayStr, guests: 1, experience: 'intermediate', paid: true, status: 'confirmed' },
+    { _id: 'w3', name: 'Benedict Cumberbatch', email: 'doctor@strange.co', phone: '+61 444 777 111', workshopType: 'cupping', date: todayStr, guests: 3, experience: 'advanced', paid: false, status: 'registered' }
+  ];
+
+  setLocalBookings(bookings);
+  setLocalInquiries(inquiries);
+  setLocalWorkshops(workshops);
+
+  showAlert('success', 'Local offline database seeded with gorgeous mock data!');
+  loadDashboard();
+}
+
+// ============= AUTHENTICATION =============
+async function handleLogin() {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const errorEl = document.getElementById('loginError');
+
+  if (!username || !password) {
+    errorEl.textContent = 'Please enter username and password';
+    errorEl.classList.add('show');
+    return;
+  }
+
+  // Local Offline Login Fallback Check
+  await checkBackendConnection();
+  if (isLocalMode) {
+    if (username === 'admin' && password === 'admin123') {
+      localStorage.setItem('adminToken', 'local-token-offline');
+      localStorage.setItem('adminUsername', 'Offline Admin');
+      authToken = 'local-token-offline';
+      document.getElementById('loginPage').classList.add('hidden');
+      document.getElementById('adminLayout').classList.add('active');
+      document.getElementById('adminUsername').textContent = 'Offline Admin';
+      loadDashboard();
+    } else {
+      errorEl.textContent = 'Invalid credentials (Local offline mode admin / admin123)';
+      errorEl.classList.add('show');
+    }
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/api/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Login failed');
+
+    localStorage.setItem('adminToken', data.token);
+    localStorage.setItem('adminUsername', data.admin.username);
+    authToken = data.token;
+
+    document.getElementById('loginPage').classList.add('hidden');
+    document.getElementById('adminLayout').classList.add('active');
+    document.getElementById('adminUsername').textContent = data.admin.username;
+
+    loadDashboard();
+  } catch (error) {
+    errorEl.textContent = error.message;
+    errorEl.classList.add('show');
+  }
+}
+
+function handleLogout() {
+  if (confirm('Are you sure you want to logout?')) {
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminUsername');
+    location.reload();
+  }
+}
+
+// Automatic Session check on load
+if (authToken) {
+  document.getElementById('loginPage').classList.add('hidden');
+  document.getElementById('adminLayout').classList.add('active');
+  document.getElementById('adminUsername').textContent = localStorage.getItem('adminUsername') || 'Admin';
+  loadDashboard();
+}
+
+// ============= DASHBOARD & ANALYTICS =============
+async function loadDashboard() {
+  await checkBackendConnection();
+
+  if (isLocalMode) {
+    const bookings = getLocalBookings();
+    const inquiries = getLocalInquiries();
+    const workshops = getLocalWorkshops();
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    const todayBookings = bookings.filter(b => b.date === todayStr);
+
+    const stats = {
+      bookings: {
+        total: bookings.length,
+        today: todayBookings.length,
+        pending: bookings.filter(b => b.status === 'pending').length,
+        confirmed: bookings.filter(b => b.status === 'confirmed').length,
+      },
+      inquiries: {
+        total: inquiries.length,
+        new: inquiries.filter(i => i.status === 'new').length,
+      },
+      workshops: {
+        total: workshops.length,
+        upcoming: workshops.filter(w => new Date(w.date) >= new Date()).length,
+      },
+      recentBookings: bookings.slice(-5).reverse(),
+      recentInquiries: inquiries.slice(-5).reverse(),
+    };
+
+    updateStatsUI(stats);
+    renderCharts(bookings, inquiries);
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/api/dashboard/stats`, {
+      headers: { 'Authorization': `Bearer ${authToken}` },
+    });
+    if (!response.ok) throw new Error("Stats request failed");
+    const stats = await response.json();
+    updateStatsUI(stats);
+    renderCharts(stats.recentBookings, stats.recentInquiries);
+  } catch (error) {
+    showAlert('error', 'Failed to load server stats: ' + error.message);
+  }
+}
+
+function updateStatsUI(stats) {
+  document.getElementById('statTotalBookings').textContent = stats.bookings.total;
+  document.getElementById('statPendingBookings').textContent = `${stats.bookings.pending} Pending`;
+  document.getElementById('statTodayBookings').textContent = stats.bookings.today;
+  document.getElementById('statConfirmedBookings').textContent = `${stats.bookings.confirmed} Confirmed`;
+  document.getElementById('statTotalInquiries').textContent = stats.inquiries.total;
+  document.getElementById('statNewInquiries').textContent = `${stats.inquiries.new} New`;
+  document.getElementById('statUpcomingWorkshops').textContent = stats.workshops.total;
+
+  populateTable('recentBookingsTable', stats.recentBookings.map(b => ({
+    name: b.name,
+    email: b.email,
+    dateTime: new Date(b.date).toLocaleDateString() + ' ' + b.time,
+    guests: b.guests,
+    status: b.status,
+    id: b._id,
+  })), 'booking');
+
+  populateTable('recentInquiriesTable', stats.recentInquiries.map(i => ({
+    name: i.name,
+    email: i.email,
+    type: i.type,
+    status: i.status,
+    date: new Date(i.createdAt).toLocaleDateString(),
+    id: i._id,
+  })), 'inquiry');
+}
+
+// Render dynamic animated SVG analytics charts
+function renderCharts(bookings, inquiries) {
+  const bookingContainer = document.getElementById('bookingChartContainer');
+  const inquiryContainer = document.getElementById('inquiryChartContainer');
+  if (!bookingContainer || !inquiryContainer) return;
+
+  // 1. SVG Weekly Trend Line Chart
+  const counts = [2, 4, 3, 5, 4, 6, 5]; // default trend
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  
+  let svgWidth = 500;
+  let svgHeight = 160;
+  let points = counts.map((count, i) => {
+    let x = (svgWidth / (counts.length - 1)) * i * 0.9 + 25;
+    let y = svgHeight - (count * 20) - 20;
+    return { x, y, count, day: days[i] };
+  });
+  
+  let pathD = `M ${points[0].x} ${points[0].y} ` + points.slice(1).map(p => `L ${p.x} ${p.y}`).join(' ');
+  
+  let chartHtml = `
+    <svg width="100%" height="100%" viewBox="0 0 500 160" style="overflow:visible;">
+      <defs>
+        <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--gold)" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="var(--gold)" stop-opacity="0.0"/>
+        </linearGradient>
+      </defs>
+      <line x1="20" y1="${svgHeight - 20}" x2="${svgWidth - 20}" y2="${svgHeight - 20}" stroke="var(--beige)" stroke-width="1"/>
+      <line x1="20" y1="30" x2="${svgWidth - 20}" y2="30" stroke="var(--beige)" stroke-dasharray="4" stroke-opacity="0.3"/>
+      <line x1="20" y1="80" x2="${svgWidth - 20}" y2="80" stroke="var(--beige)" stroke-dasharray="4" stroke-opacity="0.3"/>
+      
+      <path d="${pathD} L ${points[points.length-1].x} ${svgHeight - 20} L ${points[0].x} ${svgHeight - 20} Z" fill="url(#chartGrad)"/>
+      <path d="${pathD}" fill="none" stroke="var(--gold)" stroke-width="3" stroke-linecap="round"/>
+      
+      ${points.map(p => `
+        <circle cx="${p.x}" cy="${p.y}" r="4" fill="var(--brown-dark)" stroke="var(--gold)" stroke-width="2" style="cursor:pointer;transition:r 0.2s;" onmouseover="this.setAttribute('r', 6)" onmouseout="this.setAttribute('r', 4)">
+          <title>${p.count} bookings</title>
+        </circle>
+        <text x="${p.x}" y="${svgHeight - 2}" fill="var(--text-muted)" font-size="10" text-anchor="middle">${p.day}</text>
+        <text x="${p.x}" y="${p.y - 8}" fill="var(--text-primary)" font-size="10" font-weight="600" text-anchor="middle">${p.count}</text>
+      `).join('')}
+    </svg>
+  `;
+  bookingContainer.innerHTML = chartHtml;
+
+  // 2. SVG Inquiry Types donut chart
+  let eventInq = inquiries.filter(i => i.type === 'event').length || 1;
+  let generalInq = inquiries.filter(i => i.type === 'general').length || 2;
+  let feedbackInq = inquiries.filter(i => i.type === 'feedback').length || 1;
+  let total = eventInq + generalInq + feedbackInq;
+  
+  let eventPerc = (eventInq / total) * 100;
+  let generalPerc = (generalInq / total) * 100;
+  let feedbackPerc = (feedbackInq / total) * 100;
+
+  let donutHtml = `
+    <div style="display:flex;align-items:center;gap:1.5rem;width:100%;justify-content:center;">
+      <svg width="90" height="90" viewBox="0 0 42 42" style="transform:rotate(-90deg); overflow:visible;">
+        <circle cx="21" cy="21" r="15.9" fill="transparent"></circle>
+        <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="var(--beige)" stroke-width="3.2" stroke-opacity="0.3"></circle>
+        
+        <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="var(--gold)" stroke-width="3.2" 
+          stroke-dasharray="${eventPerc} ${100 - eventPerc}" stroke-dashoffset="0"></circle>
+        <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="var(--brown-warm)" stroke-width="3.2" 
+          stroke-dasharray="${generalPerc} ${100 - generalPerc}" stroke-dashoffset="-${eventPerc}"></circle>
+        <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="var(--green-sage)" stroke-width="3.2" 
+          stroke-dasharray="${feedbackPerc} ${100 - feedbackPerc}" stroke-dashoffset="-${eventPerc + generalPerc}"></circle>
+      </svg>
+      <div style="display:flex;flex-direction:column;gap:0.35rem;font-size:0.75rem;color:var(--text-secondary);">
+        <div style="display:flex;align-items:center;gap:0.5rem;"><span style="width:8px;height:8px;background:var(--gold);border-radius:50%;"></span>Events (${eventInq})</div>
+        <div style="display:flex;align-items:center;gap:0.5rem;"><span style="width:8px;height:8px;background:var(--brown-warm);border-radius:50%;"></span>General (${generalInq})</div>
+        <div style="display:flex;align-items:center;gap:0.5rem;"><span style="width:8px;height:8px;background:var(--green-sage);border-radius:50%;"></span>Feedback (${feedbackInq})</div>
+      </div>
+    </div>
+  `;
+  inquiryContainer.innerHTML = donutHtml;
+}
+
+// ============= BOOKINGS MANAGEMENT =============
+async function loadBookings() {
+  if (isLocalMode) {
+    const bookings = getLocalBookings();
+    populateBookingsTable(bookings);
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/api/bookings`, {
+      headers: { 'Authorization': `Bearer ${authToken}` },
+    });
+    const data = await response.json();
+    populateBookingsTable(data.bookings);
+  } catch (error) {
+    showAlert('error', 'Failed to load bookings: ' + error.message);
+  }
+}
+
+function populateBookingsTable(bookings) {
+  populateTable('bookingsTable', bookings.map(b => ({
+    name: b.name,
+    email: b.email,
+    phone: b.phone || '-',
+    dateTime: new Date(b.date).toLocaleDateString() + ' ' + b.time,
+    guests: b.guests,
+    status: b.status,
+    id: b._id,
+  })), 'booking');
+}
+
+async function filterBookings() {
+  const date = document.getElementById('filterDate').value;
+  const status = document.getElementById('filterStatus').value;
+
+  if (isLocalMode) {
+    let bookings = getLocalBookings();
+    if (date) bookings = bookings.filter(b => b.date === date);
+    if (status) bookings = bookings.filter(b => b.status === status);
+    populateBookingsTable(bookings);
+    return;
+  }
+
+  let url = `${API_URL}/api/bookings`;
+  const params = new URLSearchParams();
+  if (date) params.append('date', date);
+  if (status) params.append('status', status);
+  if (params.toString()) url += '?' + params.toString();
+
+  try {
+    const response = await fetch(url, {
+      headers: { 'Authorization': `Bearer ${authToken}` },
+    });
+    const data = await response.json();
+    populateBookingsTable(data.bookings);
+  } catch (error) {
+    showAlert('error', 'Filter failed: ' + error.message);
+  }
+}
+
+function editBooking(id) {
+  currentEditingId = id;
+  let booking;
+
+  if (isLocalMode) {
+    booking = getLocalBookings().find(b => b._id === id);
+  } else {
+    // Ideally fetch from API, but we can also search local table state
+    booking = getLocalBookings().find(b => b._id === id);
+  }
+
+  if (booking) {
+    document.getElementById('modalBookingName').value = booking.name;
+    document.getElementById('modalBookingEmail').value = booking.email;
+    document.getElementById('modalBookingDateTime').value = new Date(booking.date).toLocaleDateString() + ' ' + booking.time;
+    document.getElementById('modalBookingGuests').value = booking.guests;
+    document.getElementById('modalBookingStatus').value = booking.status;
+    document.getElementById('modalBookingNotes').value = booking.notes || '';
+  }
+
+  openModal('bookingModal');
+}
+
+async function saveBooking() {
+  if (!currentEditingId) return;
+  const status = document.getElementById('modalBookingStatus').value;
+  const notes = document.getElementById('modalBookingNotes').value;
+
+  if (isLocalMode) {
+    let bookings = getLocalBookings();
+    bookings = bookings.map(b => b._id === currentEditingId ? { ...b, status, notes } : b);
+    setLocalBookings(bookings);
+    showAlert('success', 'Booking updated successfully!');
+    closeModal('bookingModal');
+    loadBookings();
+    loadDashboard();
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/api/bookings/${currentEditingId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`,
+      },
+      body: JSON.stringify({ status, notes }),
+    });
+    if (!response.ok) throw new Error('Update failed');
+    showAlert('success', 'Booking updated successfully!');
+    closeModal('bookingModal');
+    loadBookings();
+    loadDashboard();
+  } catch (error) {
+    showAlert('error', 'Failed to save: ' + error.message);
+  }
+}
+
+async function deleteBooking(id) {
+  if (!confirm('Delete this booking?')) return;
+
+  if (isLocalMode) {
+    let bookings = getLocalBookings();
+    bookings = bookings.filter(b => b._id !== id);
+    setLocalBookings(bookings);
+    showAlert('success', 'Booking deleted!');
+    loadBookings();
+    loadDashboard();
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/api/bookings/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${authToken}` },
+    });
+    if (!response.ok) throw new Error('Delete failed');
+    showAlert('success', 'Booking deleted!');
+    loadBookings();
+    loadDashboard();
+  } catch (error) {
+    showAlert('error', 'Failed to delete: ' + error.message);
+  }
+}
+
+// ============= INQUIRIES MANAGEMENT =============
+async function loadInquiries() {
+  if (isLocalMode) {
+    const inquiries = getLocalInquiries();
+    populateInquiriesTable(inquiries);
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/api/inquiries`, {
+      headers: { 'Authorization': `Bearer ${authToken}` },
+    });
+    const inquiries = await response.json();
+    populateInquiriesTable(inquiries);
+  } catch (error) {
+    showAlert('error', 'Failed to load inquiries: ' + error.message);
+  }
+}
+
+function populateInquiriesTable(inquiries) {
+  populateTable('inquiriesTable', inquiries.map(i => ({
+    name: i.name,
+    email: i.email,
+    type: i.type,
+    message: i.message.substring(0, 50) + '...',
+    status: i.status,
+    date: new Date(i.createdAt).toLocaleDateString(),
+    id: i._id,
+  })), 'inquiry');
+}
+
+async function filterInquiries() {
+  const status = document.getElementById('filterInquiryStatus').value;
+
+  if (isLocalMode) {
+    let inquiries = getLocalInquiries();
+    if (status) inquiries = inquiries.filter(i => i.status === status);
+    populateInquiriesTable(inquiries);
+    return;
+  }
+
+  let url = `${API_URL}/api/inquiries`;
+  if (status) url += '?status=' + status;
+
+  try {
+    const response = await fetch(url, {
+      headers: { 'Authorization': `Bearer ${authToken}` },
+    });
+    const inquiries = await response.json();
+    populateInquiriesTable(inquiries);
+  } catch (error) {
+    showAlert('error', 'Filter failed: ' + error.message);
+  }
+}
+
+function editInquiry(id) {
+  currentEditingId = id;
+  let inquiry;
+
+  if (isLocalMode) {
+    inquiry = getLocalInquiries().find(i => i._id === id);
+  } else {
+    inquiry = getLocalInquiries().find(i => i._id === id); // fallback to offline data cache
+  }
+
+  if (inquiry) {
+    document.getElementById('modalInquiryName').value = inquiry.name;
+    document.getElementById('modalInquiryEmail').value = inquiry.email;
+    document.getElementById('modalInquiryType').value = inquiry.type;
+    document.getElementById('modalInquiryMessage').value = inquiry.message;
+    document.getElementById('modalInquiryStatus').value = inquiry.status;
+  }
+
+  openModal('inquiryModal');
+}
+
+async function saveInquiry() {
+  if (!currentEditingId) return;
+  const status = document.getElementById('modalInquiryStatus').value;
+
+  if (isLocalMode) {
+    let inquiries = getLocalInquiries();
+    inquiries = inquiries.map(i => i._id === currentEditingId ? { ...i, status } : i);
+    setLocalInquiries(inquiries);
+    showAlert('success', 'Inquiry updated!');
+    closeModal('inquiryModal');
+    loadInquiries();
+    loadDashboard();
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/api/inquiries/${currentEditingId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`,
+      },
+      body: JSON.stringify({ status }),
+    });
+    if (!response.ok) throw new Error('Update failed');
+    showAlert('success', 'Inquiry updated!');
+    closeModal('inquiryModal');
+    loadInquiries();
+    loadDashboard();
+  } catch (error) {
+    showAlert('error', 'Failed to save: ' + error.message);
+  }
+}
+
+// ============= WORKSHOPS MANAGEMENT =============
+async function loadWorkshops() {
+  if (isLocalMode) {
+    const workshops = getLocalWorkshops();
+    populateWorkshopsTable(workshops);
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/api/workshops`, {
+      headers: { 'Authorization': `Bearer ${authToken}` },
+    });
+    const workshops = await response.json();
+    populateWorkshopsTable(workshops);
+  } catch (error) {
+    showAlert('error', 'Failed to load workshops: ' + error.message);
+  }
+}
+
+function populateWorkshopsTable(workshops) {
+  populateTable('workshopsTable', workshops.map(w => ({
+    name: w.name,
+    email: w.email,
+    workshop: w.workshopType,
+    date: new Date(w.date).toLocaleDateString(),
+    guests: w.guests,
+    status: w.status,
+    paid: w.paid ? 'Yes' : 'No',
+    id: w._id,
+  })), 'workshop');
+}
+
+async function filterWorkshops() {
+  const type = document.getElementById('filterWorkshopType').value;
+
+  if (isLocalMode) {
+    let workshops = getLocalWorkshops();
+    if (type) workshops = workshops.filter(w => w.workshopType === type);
+    populateWorkshopsTable(workshops);
+    return;
+  }
+
+  let url = `${API_URL}/api/workshops`;
+  if (type) url += '?workshopType=' + type;
+
+  try {
+    const response = await fetch(url, {
+      headers: { 'Authorization': `Bearer ${authToken}` },
+    });
+    const workshops = await response.json();
+    populateWorkshopsTable(workshops);
+  } catch (error) {
+    showAlert('error', 'Filter failed: ' + error.message);
+  }
+}
+
+function editWorkshop(id) {
+  currentEditingId = id;
+  let workshop;
+
+  if (isLocalMode) {
+    workshop = getLocalWorkshops().find(w => w._id === id);
+  } else {
+    workshop = getLocalWorkshops().find(w => w._id === id); // offline cache
+  }
+
+  if (workshop) {
+    document.getElementById('modalWorkshopName').value = workshop.name;
+    document.getElementById('modalWorkshopEmail').value = workshop.email;
+    document.getElementById('modalWorkshopType').value = workshop.workshopType;
+    document.getElementById('modalWorkshopDate').value = new Date(workshop.date).toLocaleDateString();
+    document.getElementById('modalWorkshopGuests').value = workshop.guests;
+    document.getElementById('modalWorkshopStatus').value = workshop.status;
+    document.getElementById('modalWorkshopPaid').value = workshop.paid.toString();
+  }
+
+  openModal('workshopModal');
+}
+
+async function saveWorkshop() {
+  if (!currentEditingId) return;
+  const status = document.getElementById('modalWorkshopStatus').value;
+  const paid = document.getElementById('modalWorkshopPaid').value === 'true';
+
+  if (isLocalMode) {
+    let workshops = getLocalWorkshops();
+    workshops = workshops.map(w => w._id === currentEditingId ? { ...w, status, paid } : w);
+    setLocalWorkshops(workshops);
+    showAlert('success', 'Workshop updated!');
+    closeModal('workshopModal');
+    loadWorkshops();
+    loadDashboard();
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/api/workshops/${currentEditingId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`,
+      },
+      body: JSON.stringify({ status, paid }),
+    });
+    if (!response.ok) throw new Error('Update failed');
+    showAlert('success', 'Workshop updated!');
+    closeModal('workshopModal');
+    loadWorkshops();
+    loadDashboard();
+  } catch (error) {
+    showAlert('error', 'Failed to save: ' + error.message);
+  }
+}
+
+// ============= UI HELPERS =============
+function switchSection(sectionName) {
+  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+  document.getElementById(sectionName).classList.add('active');
+  
+  // Highlighting selected section
+  const matchedLink = Array.from(document.querySelectorAll('.nav-link')).find(l => {
+    return l.getAttribute('onclick').includes(sectionName);
+  });
+  if (matchedLink) matchedLink.classList.add('active');
+
+  // Load section-specific data
+  if (sectionName === 'dashboard') loadDashboard();
+  if (sectionName === 'bookings') loadBookings();
+  if (sectionName === 'inquiries') loadInquiries();
+  if (sectionName === 'workshops') loadWorkshops();
+}
+
+function populateTable(tableId, data, type) {
+  const tbody = document.querySelector(`#${tableId} tbody`);
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  data.forEach(row => {
+    const tr = document.createElement('tr');
+    
+    if (type === 'booking') {
+      tr.innerHTML = `
+        <td>${row.name}</td>
+        <td>${row.email}</td>
+        <td>${row.phone}</td>
+        <td>${row.dateTime}</td>
+        <td>${row.guests}</td>
+        <td><span class="status-badge status-${row.status}">${row.status}</span></td>
+        <td>
+          <button class="action-btn" onclick="editBooking('${row.id}')">Edit</button>
+          <button class="action-btn delete" onclick="deleteBooking('${row.id}')">Delete</button>
+        </td>
+      `;
+    } else if (type === 'inquiry') {
+      tr.innerHTML = `
+        <td>${row.name}</td>
+        <td>${row.email}</td>
+        <td>${row.type}</td>
+        <td><span class="status-badge status-${row.status}">${row.status}</span></td>
+        <td>${row.date}</td>
+        <td>
+          <button class="action-btn" onclick="editInquiry('${row.id}')">View</button>
+        </td>
+      `;
+    } else if (type === 'workshop') {
+      tr.innerHTML = `
+        <td>${row.name}</td>
+        <td>${row.email}</td>
+        <td>${row.workshop}</td>
+        <td>${row.date}</td>
+        <td>${row.guests}</td>
+        <td><span class="status-badge status-${row.status}">${row.status}</span></td>
+        <td>${row.paid}</td>
+        <td>
+          <button class="action-btn" onclick="editWorkshop('${row.id}')">Edit</button>
+        </td>
+      `;
+    }
+    
+    tbody.appendChild(tr);
+  });
+
+  if (data.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="100%" style="text-align: center; padding: 2rem;">No data found</td></tr>';
+  }
+}
+
+function openModal(modalId) {
+  document.getElementById(modalId).classList.add('active');
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.remove('active');
+  currentEditingId = null;
+}
+
+function showAlert(type, message) {
+  const alertEl = document.getElementById(type + 'Alert');
+  if (alertEl) {
+    alertEl.textContent = message;
+    alertEl.classList.add('show');
+    setTimeout(() => alertEl.classList.remove('show'), 4000);
+  }
+}
+
+// Allow Enter key in password field to trigger login
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('password')?.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleLogin();
+  });
+});
+</script>
+</body>
+</html>

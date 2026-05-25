@@ -1,0 +1,2093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cupping Room — Crafted Coffee. Shared Moments.</title>
+<meta name="description" content="Award-winning specialty coffee and seasonal brunch in Canberra's heart. Where craft meets community.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F5F0E8;
+  --cream-light: #FAF7F2;
+  --beige: #E8DECE;
+  --brown-dark: #2C1A0E;
+  --brown-mid: #5C3D24;
+  --brown-warm: #8B5E3C;
+  --brown-light: #C4956A;
+  --green-muted: #4A5240;
+  --green-sage: #7A8C6E;
+  --green-pale: #B8C4A8;
+  --black-soft: #1A1209;
+  --text-primary: #2C1A0E;
+  --text-secondary: #6B4C35;
+  --text-muted: #9C8070;
+  --gold: #C8A96E;
+  --gold-light: #E2C99A;
+  --shadow-warm: rgba(44, 26, 14, 0.12);
+  --shadow-deep: rgba(44, 26, 14, 0.25);
+  --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-fast: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+[data-theme="dark"] {
+  --cream: #1C1208;
+  --cream-light: #221608;
+  --beige: #2E1F10;
+  --brown-dark: #F5EDD8;
+  --brown-mid: #E0C9A8;
+  --brown-warm: #C4A882;
+  --brown-light: #9A7A5C;
+  --green-muted: #8A9C7A;
+  --green-sage: #B8C9A4;
+  --green-pale: #5A6C50;
+  --black-soft: #FAF5EC;
+  --text-primary: #F5EDD8;
+  --text-secondary: #C4A882;
+  --text-muted: #8A7060;
+  --shadow-warm: rgba(0,0,0,0.3);
+  --shadow-deep: rgba(0,0,0,0.5);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--cream);
+  color:var(--text-primary);
+  overflow-x:hidden;
+  transition:background var(--transition),color var(--transition);
+}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+button{border:none;background:none;cursor:pointer;font-family:inherit}
+
+/* LOADING SCREEN */
+#loader{
+  position:fixed;inset:0;
+  background:var(--brown-dark);
+  z-index:9999;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:2rem;
+  transition:opacity 0.8s ease,visibility 0.8s ease;
+}
+#loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loader-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.5rem;
+  font-weight:300;
+  color:var(--cream);
+  letter-spacing:0.15em;
+  animation:fadeInUp 0.8s ease forwards;
+}
+.loader-bar{
+  width:200px;height:1px;
+  background:rgba(245,240,232,0.2);
+  overflow:hidden;
+}
+.loader-progress{
+  height:100%;
+  background:var(--gold);
+  width:0%;
+  animation:loadBar 2s ease forwards;
+}
+@keyframes loadBar{to{width:100%}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* NAVBAR */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:1.5rem 4rem;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all 0.5s ease;
+}
+#navbar.scrolled{
+  background:rgba(var(--cream-rgb, 245,240,232),0.95);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  padding:1rem 4rem;
+  border-bottom:1px solid rgba(139,94,60,0.1);
+  box-shadow:0 4px 30px var(--shadow-warm);
+}
+[data-theme="dark"] #navbar.scrolled{
+  background:rgba(28,18,8,0.95);
+}
+.nav-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;
+  font-weight:400;
+  letter-spacing:0.1em;
+  color:var(--cream);
+  transition:color var(--transition);
+}
+#navbar.scrolled .nav-logo{color:var(--text-primary)}
+.nav-links{
+  display:flex;align-items:center;gap:2.5rem;
+  list-style:none;
+}
+.nav-links a{
+  font-size:0.85rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  font-weight:400;
+  color:rgba(245,240,232,0.85);
+  transition:color var(--transition-fast);
+  position:relative;
+}
+.nav-links a::after{
+  content:'';
+  position:absolute;bottom:-4px;left:0;right:0;height:1px;
+  background:var(--gold);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform var(--transition-fast);
+}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-links a:hover{color:var(--gold-light)}
+#navbar.scrolled .nav-links a{color:var(--text-secondary)}
+#navbar.scrolled .nav-links a:hover{color:var(--brown-warm)}
+.nav-right{display:flex;align-items:center;gap:1.5rem}
+.nav-reserve-btn{
+  padding:0.6rem 1.5rem;
+  border:1px solid rgba(245,240,232,0.5);
+  font-size:0.8rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--cream);
+  border-radius:100px;
+  transition:all var(--transition-fast);
+  font-family:'DM Sans',sans-serif;
+}
+.nav-reserve-btn:hover{
+  background:var(--gold);
+  border-color:var(--gold);
+  color:var(--brown-dark);
+}
+#navbar.scrolled .nav-reserve-btn{
+  color:var(--text-primary);
+  border-color:var(--brown-light);
+}
+.theme-toggle{
+  width:36px;height:36px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--cream);
+  transition:all var(--transition-fast);
+  font-size:1.1rem;
+}
+#navbar.scrolled .theme-toggle{color:var(--text-primary)}
+.theme-toggle:hover{background:rgba(245,240,232,0.1)}
+.hamburger{
+  display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;
+}
+.hamburger span{
+  display:block;width:24px;height:1.5px;
+  background:var(--cream);
+  transition:all var(--transition-fast);
+}
+#navbar.scrolled .hamburger span{background:var(--text-primary)}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
+.hamburger.active span:nth-child(2){opacity:0;transform:translateX(-10px)}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+
+/* MOBILE MENU */
+#mobile-menu{
+  position:fixed;inset:0;z-index:999;
+  background:var(--brown-dark);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2rem;
+  opacity:0;visibility:hidden;
+  transition:all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  transform:translateY(-20px);
+}
+#mobile-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+.mobile-nav-links{list-style:none;text-align:center}
+.mobile-nav-links li{margin:1rem 0}
+.mobile-nav-links a{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3rem;
+  font-weight:300;
+  color:var(--cream);
+  letter-spacing:0.05em;
+  transition:color var(--transition-fast);
+  display:block;
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity 0.5s ease, transform 0.5s ease, color 0.2s ease;
+}
+#mobile-menu.open .mobile-nav-links a{opacity:1;transform:translateY(0)}
+#mobile-menu.open .mobile-nav-links li:nth-child(1) a{transition-delay:0.1s}
+#mobile-menu.open .mobile-nav-links li:nth-child(2) a{transition-delay:0.15s}
+#mobile-menu.open .mobile-nav-links li:nth-child(3) a{transition-delay:0.2s}
+#mobile-menu.open .mobile-nav-links li:nth-child(4) a{transition-delay:0.25s}
+#mobile-menu.open .mobile-nav-links li:nth-child(5) a{transition-delay:0.3s}
+#mobile-menu.open .mobile-nav-links li:nth-child(6) a{transition-delay:0.35s}
+.mobile-nav-links a:hover{color:var(--gold)}
+
+/* HERO */
+#hero{
+  position:relative;height:100vh;min-height:700px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  overflow:hidden;
+  transform:scale(1.05);
+  transition:transform 8s ease;
+}
+.hero-bg::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom, rgba(28,18,8,0.35) 0%, rgba(28,18,8,0.55) 50%, rgba(28,18,8,0.85) 100%);
+  pointer-events:none;
+}
+#hero.loaded .hero-bg{transform:scale(1)}
+.hero-content{
+  position:relative;z-index:2;
+  text-align:center;
+  padding:0 2rem;
+  max-width:900px;
+}
+.hero-eyebrow{
+  font-size:0.8rem;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:400;
+  margin-bottom:1.5rem;
+  opacity:0;
+  transform:translateY(20px);
+  animation:heroReveal 1s ease 0.5s forwards;
+}
+.hero-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3rem, 8vw, 7rem);
+  font-weight:300;
+  line-height:1.05;
+  color:var(--cream);
+  letter-spacing:-0.01em;
+  margin-bottom:1.5rem;
+  opacity:0;
+  transform:translateY(30px);
+  animation:heroReveal 1s ease 0.7s forwards;
+}
+.hero-headline em{
+  font-style:italic;
+  color:var(--gold-light);
+}
+.hero-sub{
+  font-size:1.1rem;
+  font-weight:300;
+  color:rgba(245,240,232,0.75);
+  letter-spacing:0.02em;
+  margin-bottom:3rem;
+  opacity:0;
+  transform:translateY(20px);
+  animation:heroReveal 1s ease 0.9s forwards;
+}
+.hero-ctas{
+  display:flex;align-items:center;justify-content:center;gap:1.5rem;
+  flex-wrap:wrap;
+  opacity:0;
+  transform:translateY(20px);
+  animation:heroReveal 1s ease 1.1s forwards;
+}
+@keyframes heroReveal{to{opacity:1;transform:translateY(0)}}
+.btn-primary{
+  padding:1rem 2.5rem;
+  background:var(--gold);
+  color:var(--brown-dark);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.85rem;
+  font-weight:500;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  border-radius:100px;
+  transition:all var(--transition-fast);
+  display:inline-block;
+}
+.btn-primary:hover{
+  background:var(--gold-light);
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(200,169,110,0.4);
+}
+.btn-outline{
+  padding:1rem 2.5rem;
+  border:1px solid rgba(245,240,232,0.5);
+  color:var(--cream);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.85rem;
+  font-weight:400;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  border-radius:100px;
+  transition:all var(--transition-fast);
+  display:inline-block;
+}
+.btn-outline:hover{
+  background:rgba(245,240,232,0.1);
+  border-color:var(--cream);
+  transform:translateY(-2px);
+}
+.hero-scroll{
+  position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:0.75rem;
+  opacity:0;
+  animation:heroReveal 1s ease 1.5s forwards;
+  cursor:pointer;
+}
+.hero-scroll span{
+  font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:rgba(245,240,232,0.6);
+}
+.scroll-line{
+  width:1px;height:50px;
+  background:linear-gradient(to bottom, rgba(200,169,110,0.8), transparent);
+  animation:scrollPulse 2s ease infinite;
+}
+@keyframes scrollPulse{
+  0%{transform:scaleY(0);transform-origin:top;opacity:1}
+  50%{transform:scaleY(1);transform-origin:top;opacity:1}
+  100%{transform:scaleY(1);transform-origin:bottom;opacity:0}
+}
+
+/* STEAM ANIMATION */
+.steam{
+  position:absolute;bottom:100%;left:50%;transform:translateX(-50%);
+  width:30px;
+}
+.steam-particle{
+  position:absolute;
+  width:4px;border-radius:100px;
+  background:rgba(245,240,232,0.4);
+  animation:steamRise 3s ease infinite;
+  filter:blur(1px);
+}
+.steam-particle:nth-child(1){left:0;height:30px;animation-delay:0s}
+.steam-particle:nth-child(2){left:12px;height:45px;animation-delay:0.5s}
+.steam-particle:nth-child(3){left:24px;height:25px;animation-delay:1s}
+@keyframes steamRise{
+  0%{opacity:0;transform:translateY(0) scaleX(1)}
+  20%{opacity:0.8}
+  100%{opacity:0;transform:translateY(-60px) scaleX(0.5) rotate(5deg)}
+}
+
+/* SECTION SHARED */
+.section{padding:8rem 4rem}
+.section-inner{max-width:1300px;margin:0 auto}
+.reveal{
+  opacity:0;transform:translateY(40px);
+  transition:opacity 0.8s ease,transform 0.8s ease;
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{
+  opacity:0;transform:translateX(-40px);
+  transition:opacity 0.8s ease,transform 0.8s ease;
+}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{
+  opacity:0;transform:translateX(40px);
+  transition:opacity 0.8s ease,transform 0.8s ease;
+}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+
+.section-label{
+  font-size:0.75rem;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:400;
+  margin-bottom:1rem;
+  display:flex;align-items:center;gap:0.75rem;
+}
+.section-label::before{
+  content:'';
+  width:30px;height:1px;
+  background:var(--gold);
+}
+.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.2rem,4vw,3.5rem);
+  font-weight:300;
+  line-height:1.15;
+  color:var(--text-primary);
+  margin-bottom:1.5rem;
+}
+.section-title em{font-style:italic;color:var(--brown-warm)}
+
+/* MARQUEE */
+.marquee-section{
+  padding:2rem 0;
+  background:var(--brown-dark);
+  overflow:hidden;
+  border-top:1px solid rgba(200,169,110,0.2);
+  border-bottom:1px solid rgba(200,169,110,0.2);
+}
+.marquee-track{
+  display:flex;gap:4rem;width:max-content;
+  animation:marquee 30s linear infinite;
+}
+.marquee-track:hover{animation-play-state:paused}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.marquee-item{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;
+  font-weight:300;
+  color:rgba(245,240,232,0.5);
+  letter-spacing:0.1em;
+  white-space:nowrap;
+  display:flex;align-items:center;gap:4rem;
+}
+.marquee-item span{color:var(--gold);font-size:0.6rem}
+
+/* ABOUT INTRO */
+#about-intro{background:var(--cream-light)}
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6rem;
+  align-items:center;
+}
+.about-image-stack{
+  position:relative;
+  height:600px;
+}
+.about-img-main{
+  width:75%;height:480px;object-fit:cover;
+  border-radius:4px;
+  position:absolute;top:0;right:0;
+  box-shadow:0 20px 60px var(--shadow-deep);
+}
+.about-img-accent{
+  width:55%;height:300px;object-fit:cover;
+  border-radius:4px;
+  position:absolute;bottom:0;left:0;
+  box-shadow:0 20px 60px var(--shadow-deep);
+  border:4px solid var(--cream-light);
+}
+.about-badge{
+  position:absolute;top:40%;right:-20px;
+  width:100px;height:100px;
+  background:var(--gold);
+  border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:10;
+  box-shadow:0 8px 30px rgba(200,169,110,0.4);
+}
+.about-badge strong{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;
+  font-weight:600;
+  color:var(--brown-dark);
+  line-height:1;
+}
+.about-badge small{
+  font-size:0.6rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--brown-mid);
+  text-align:center;
+}
+.about-text p{
+  font-size:1.05rem;
+  line-height:1.85;
+  color:var(--text-secondary);
+  margin-bottom:1.25rem;
+  font-weight:300;
+}
+.about-sig{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem;
+  font-style:italic;
+  color:var(--brown-warm);
+  margin-top:2rem;
+}
+
+/* STATS */
+#stats{
+  background:var(--brown-dark);
+  padding:5rem 4rem;
+}
+.stats-grid{
+  max-width:1300px;margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:2rem;
+  text-align:center;
+}
+.stat-item{padding:2rem 1rem}
+.stat-number{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3rem,5vw,5rem);
+  font-weight:300;
+  color:var(--gold);
+  line-height:1;
+  margin-bottom:0.5rem;
+  display:block;
+}
+.stat-label{
+  font-size:0.8rem;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:rgba(245,240,232,0.5);
+  font-weight:400;
+}
+.stat-divider{
+  width:1px;
+  background:rgba(200,169,110,0.2);
+  align-self:stretch;
+  margin:2rem 0;
+}
+
+/* COFFEE COLLECTION */
+#menu-section{background:var(--cream)}
+.menu-tabs{
+  display:flex;gap:0;
+  border:1px solid var(--beige);
+  border-radius:100px;
+  overflow:hidden;
+  width:fit-content;
+  margin:0 auto 4rem;
+}
+.menu-tab{
+  padding:0.75rem 2rem;
+  font-size:0.8rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  font-weight:400;
+  color:var(--text-muted);
+  transition:all var(--transition-fast);
+  white-space:nowrap;
+}
+.menu-tab.active{
+  background:var(--brown-dark);
+  color:var(--cream);
+}
+.menu-tab:hover:not(.active){
+  background:var(--beige);
+  color:var(--text-primary);
+}
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2rem;
+}
+.menu-card{
+  background:var(--cream-light);
+  border-radius:12px;
+  overflow:hidden;
+  transition:transform var(--transition-fast),box-shadow var(--transition-fast);
+  border:1px solid rgba(139,94,60,0.08);
+}
+.menu-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 50px var(--shadow-warm);
+}
+.menu-card-img{
+  height:240px;overflow:hidden;position:relative;
+}
+.menu-card-img img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.6s ease;
+}
+.menu-card:hover .menu-card-img img{transform:scale(1.05)}
+.menu-card-tag{
+  position:absolute;top:1rem;right:1rem;
+  padding:0.35rem 1rem;
+  background:var(--gold);
+  color:var(--brown-dark);
+  font-size:0.7rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  border-radius:100px;
+  font-weight:500;
+}
+.menu-card-body{padding:1.75rem}
+.menu-card-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;
+  font-weight:400;
+  color:var(--text-primary);
+  margin-bottom:0.5rem;
+}
+.menu-card-desc{
+  font-size:0.9rem;
+  line-height:1.7;
+  color:var(--text-muted);
+  font-weight:300;
+  margin-bottom:1.25rem;
+}
+.menu-card-footer{
+  display:flex;align-items:center;justify-content:space-between;
+}
+.menu-card-price{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;
+  font-weight:400;
+  color:var(--brown-warm);
+}
+.menu-card-order{
+  width:40px;height:40px;
+  border:1px solid var(--beige);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;
+  color:var(--text-muted);
+  transition:all var(--transition-fast);
+}
+.menu-card-order:hover{
+  background:var(--gold);
+  border-color:var(--gold);
+  color:var(--brown-dark);
+  transform:rotate(90deg);
+}
+
+/* BREWING SHOWCASE */
+#brewing{
+  background:var(--brown-dark);
+  padding:8rem 4rem;
+  position:relative;
+  overflow:hidden;
+}
+#brewing::before{
+  content:'';
+  position:absolute;inset:0;
+  background:url('https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1750660295396-3IS5BYM38BPAL84UCK83/DSC05657.JPG?format=800w') center/cover no-repeat;
+  opacity:0.08;
+}
+.brewing-inner{max-width:1300px;margin:0 auto;position:relative;z-index:1}
+.brewing-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5rem;
+  align-items:center;
+}
+.brewing-steps{
+  display:flex;flex-direction:column;gap:2.5rem;
+  margin-top:3rem;
+}
+.brewing-step{
+  display:flex;gap:2rem;align-items:flex-start;
+  padding-bottom:2.5rem;
+  border-bottom:1px solid rgba(200,169,110,0.15);
+  transition:all var(--transition-fast);
+}
+.brewing-step:last-child{border-bottom:none;padding-bottom:0}
+.step-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3rem;
+  font-weight:300;
+  color:rgba(200,169,110,0.25);
+  line-height:1;
+  min-width:50px;
+  transition:color var(--transition-fast);
+}
+.brewing-step:hover .step-num{color:var(--gold)}
+.step-content h4{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;
+  font-weight:400;
+  color:var(--cream);
+  margin-bottom:0.5rem;
+}
+.step-content p{
+  font-size:0.9rem;
+  line-height:1.7;
+  color:rgba(245,240,232,0.5);
+  font-weight:300;
+}
+.brewing-visual{
+  position:relative;
+}
+.brewing-main-img{
+  width:100%;height:600px;object-fit:cover;
+  border-radius:8px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.4);
+}
+.brewing-float-card{
+  position:absolute;bottom:-2rem;left:-3rem;
+  background:rgba(44,26,14,0.9);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(200,169,110,0.2);
+  border-radius:12px;
+  padding:1.5rem 2rem;
+  max-width:220px;
+}
+.brewing-float-card p{
+  font-size:0.8rem;
+  color:rgba(245,240,232,0.5);
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  margin-bottom:0.25rem;
+}
+.brewing-float-card strong{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;
+  font-weight:300;
+  color:var(--gold);
+}
+
+/* BARISTA SECTION */
+#baristas{
+  background:var(--cream-light);
+  padding:8rem 4rem;
+}
+.baristas-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2rem;
+  margin-top:4rem;
+}
+.barista-card{
+  text-align:center;
+  padding:3rem 2rem 2.5rem;
+  background:var(--cream);
+  border-radius:12px;
+  border:1px solid rgba(139,94,60,0.08);
+  transition:all var(--transition-fast);
+  position:relative;overflow:hidden;
+}
+.barista-card::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(135deg, var(--gold) 0%, var(--brown-warm) 100%);
+  opacity:0;
+  transition:opacity var(--transition-fast);
+}
+.barista-card:hover::before{opacity:0.04}
+.barista-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 20px 50px var(--shadow-warm);
+}
+.barista-avatar{
+  width:100px;height:100px;
+  border-radius:50%;
+  margin:0 auto 1.5rem;
+  overflow:hidden;
+  border:3px solid var(--beige);
+  transition:border-color var(--transition-fast);
+}
+.barista-card:hover .barista-avatar{border-color:var(--gold)}
+.barista-avatar img{width:100%;height:100%;object-fit:cover}
+.barista-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;
+  font-weight:400;
+  color:var(--text-primary);
+  margin-bottom:0.25rem;
+}
+.barista-role{
+  font-size:0.75rem;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:400;
+  margin-bottom:1rem;
+}
+.barista-bio{
+  font-size:0.9rem;
+  line-height:1.7;
+  color:var(--text-muted);
+  font-weight:300;
+}
+.barista-specialty{
+  display:inline-block;
+  margin-top:1.25rem;
+  padding:0.4rem 1.2rem;
+  background:var(--beige);
+  border-radius:100px;
+  font-size:0.75rem;
+  color:var(--text-secondary);
+  letter-spacing:0.05em;
+}
+
+/* TESTIMONIALS */
+#testimonials{
+  background:var(--cream);
+  padding:8rem 4rem;
+}
+.testimonials-inner{max-width:1300px;margin:0 auto}
+.testimonial-slider{
+  position:relative;margin-top:4rem;overflow:hidden;
+}
+.testimonial-track{
+  display:flex;gap:2rem;
+  transition:transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.testimonial-card{
+  flex:0 0 calc(33.333% - 1.35rem);
+  background:var(--cream-light);
+  border-radius:16px;
+  padding:2.5rem;
+  border:1px solid rgba(139,94,60,0.08);
+  position:relative;
+}
+.testimonial-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3rem;
+  color:var(--gold);
+  line-height:0.5;
+  margin-bottom:1.5rem;
+  opacity:0.6;
+}
+.testimonial-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;
+  font-weight:300;
+  font-style:italic;
+  line-height:1.7;
+  color:var(--text-primary);
+  margin-bottom:2rem;
+}
+.testimonial-author{
+  display:flex;align-items:center;gap:1rem;
+}
+.testimonial-avatar{
+  width:48px;height:48px;border-radius:50%;overflow:hidden;
+  border:2px solid var(--beige);
+}
+.testimonial-avatar img{width:100%;height:100%;object-fit:cover}
+.testimonial-info h5{
+  font-size:0.95rem;font-weight:500;
+  color:var(--text-primary);margin-bottom:0.2rem;
+}
+.testimonial-info small{
+  font-size:0.8rem;color:var(--text-muted);
+}
+.testimonial-stars{
+  display:flex;gap:2px;margin-bottom:1.25rem;
+  color:var(--gold);font-size:0.85rem;
+}
+.slider-controls{
+  display:flex;align-items:center;justify-content:center;gap:1rem;
+  margin-top:3rem;
+}
+.slider-btn{
+  width:48px;height:48px;
+  border:1px solid var(--beige);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+  color:var(--text-secondary);
+  transition:all var(--transition-fast);
+}
+.slider-btn:hover{
+  background:var(--gold);
+  border-color:var(--gold);
+  color:var(--brown-dark);
+}
+.slider-dots{
+  display:flex;gap:0.5rem;align-items:center;
+}
+.slider-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--beige);
+  transition:all var(--transition-fast);
+}
+.slider-dot.active{
+  width:20px;border-radius:100px;
+  background:var(--gold);
+}
+
+/* GALLERY */
+#gallery{
+  padding:8rem 4rem;
+  background:var(--cream-light);
+}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:auto;
+  gap:1rem;
+  margin-top:4rem;
+}
+.gallery-item{
+  overflow:hidden;border-radius:8px;
+  position:relative;cursor:pointer;
+}
+.gallery-item.tall{grid-row:span 2}
+.gallery-item.wide{grid-column:span 2}
+.gallery-item img{
+  width:100%;height:100%;min-height:250px;object-fit:cover;
+  transition:transform 0.7s ease;
+}
+.gallery-item:hover img{transform:scale(1.05)}
+.gallery-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(28,18,8,0.6) 0%, transparent 60%);
+  opacity:0;
+  transition:opacity var(--transition-fast);
+  display:flex;align-items:flex-end;padding:1.5rem;
+}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-overlay span{
+  font-size:0.75rem;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--cream);
+}
+
+/* EVENTS */
+#events{
+  background:var(--brown-dark);
+  padding:8rem 4rem;
+  position:relative;overflow:hidden;
+}
+.events-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3rem;
+  margin-top:4rem;
+}
+.event-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(200,169,110,0.15);
+  border-radius:12px;
+  padding:2.5rem;
+  display:flex;gap:2rem;
+  transition:all var(--transition-fast);
+  backdrop-filter:blur(10px);
+}
+.event-card:hover{
+  background:rgba(200,169,110,0.06);
+  border-color:rgba(200,169,110,0.35);
+  transform:translateY(-4px);
+}
+.event-date{
+  text-align:center;
+  min-width:60px;
+}
+.event-date-day{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.5rem;
+  font-weight:300;
+  color:var(--gold);
+  line-height:1;
+}
+.event-date-month{
+  font-size:0.7rem;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:rgba(245,240,232,0.4);
+}
+.event-info h4{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;
+  font-weight:400;
+  color:var(--cream);
+  margin-bottom:0.5rem;
+}
+.event-info p{
+  font-size:0.9rem;line-height:1.6;
+  color:rgba(245,240,232,0.5);
+  font-weight:300;
+  margin-bottom:1.25rem;
+}
+.event-meta{
+  display:flex;gap:1.5rem;
+  font-size:0.75rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:rgba(245,240,232,0.35);
+}
+.event-meta span::before{
+  content:'';
+  display:inline-block;
+  width:4px;height:4px;border-radius:50%;
+  background:var(--gold);
+  margin-right:0.5rem;
+  vertical-align:middle;
+}
+.event-link{
+  margin-top:1rem;
+  font-size:0.8rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--gold);
+  display:flex;align-items:center;gap:0.5rem;
+  transition:gap var(--transition-fast);
+}
+.event-link:hover{gap:1rem}
+
+/* RESERVATION */
+#reservation{
+  padding:8rem 4rem;
+  background:linear-gradient(135deg, var(--brown-dark) 0%, #1A2210 100%);
+  position:relative;overflow:hidden;
+}
+#reservation::before{
+  content:'';position:absolute;inset:0;
+  background:url('https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1750660251981-F7ACTKIDP12U30HOTIZK/DSC05596.JPG?format=800w') center/cover;
+  opacity:0.05;
+}
+.reservation-inner{
+  max-width:800px;margin:0 auto;
+  position:relative;z-index:1;
+  text-align:center;
+}
+.reservation-form{
+  background:rgba(245,240,232,0.05);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(200,169,110,0.2);
+  border-radius:20px;
+  padding:3rem;
+  margin-top:3rem;
+}
+.form-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.25rem;
+  margin-bottom:1.25rem;
+}
+.form-group{
+  display:flex;flex-direction:column;gap:0.5rem;
+  text-align:left;
+}
+.form-group label{
+  font-size:0.75rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:rgba(245,240,232,0.5);
+}
+.form-group input,
+.form-group select{
+  padding:0.9rem 1.25rem;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(200,169,110,0.2);
+  border-radius:8px;
+  font-family:'DM Sans',sans-serif;
+  font-size:0.95rem;
+  font-weight:300;
+  color:var(--cream);
+  transition:border-color var(--transition-fast);
+  outline:none;
+}
+.form-group input:focus,
+.form-group select:focus{
+  border-color:var(--gold);
+  background:rgba(200,169,110,0.06);
+}
+.form-group select option{background:var(--brown-dark)}
+.reserve-submit{
+  width:100%;
+  padding:1.1rem;
+  background:var(--gold);
+  color:var(--brown-dark);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.85rem;
+  font-weight:500;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  border-radius:8px;
+  transition:all var(--transition-fast);
+  margin-top:1rem;
+  border:none;cursor:pointer;
+}
+.reserve-submit:hover{
+  background:var(--gold-light);
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(200,169,110,0.3);
+}
+
+/* NEWSLETTER */
+#newsletter{
+  padding:6rem 4rem;
+  background:var(--beige);
+}
+.newsletter-inner{
+  max-width:600px;margin:0 auto;
+  text-align:center;
+}
+.newsletter-input-row{
+  display:flex;gap:0;
+  margin-top:2rem;
+  border:1px solid rgba(139,94,60,0.25);
+  border-radius:100px;
+  overflow:hidden;
+  background:var(--cream);
+}
+.newsletter-input{
+  flex:1;
+  padding:1rem 1.75rem;
+  border:none;outline:none;
+  background:transparent;
+  font-family:'DM Sans',sans-serif;
+  font-size:0.95rem;
+  color:var(--text-primary);
+}
+.newsletter-input::placeholder{color:var(--text-muted)}
+.newsletter-btn{
+  padding:1rem 2rem;
+  background:var(--brown-dark);
+  color:var(--cream);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.8rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  font-weight:500;
+  border:none;cursor:pointer;
+  transition:background var(--transition-fast);
+  border-radius:0 100px 100px 0;
+  white-space:nowrap;
+}
+.newsletter-btn:hover{background:var(--brown-warm)}
+.newsletter-privacy{
+  font-size:0.8rem;color:var(--text-muted);
+  margin-top:1rem;font-weight:300;
+}
+
+/* FOOTER */
+footer{
+  background:var(--brown-dark);
+  padding:5rem 4rem 2rem;
+  position:relative;
+}
+.footer-top-line{
+  height:1px;
+  background:linear-gradient(to right, transparent, var(--gold), transparent);
+  margin-bottom:4rem;
+  opacity:0.4;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1.5fr;
+  gap:4rem;
+  max-width:1300px;margin:0 auto;
+}
+.footer-brand h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem;
+  font-weight:300;
+  color:var(--cream);
+  letter-spacing:0.1em;
+  margin-bottom:1rem;
+}
+.footer-brand p{
+  font-size:0.9rem;line-height:1.75;
+  color:rgba(245,240,232,0.45);
+  font-weight:300;
+  margin-bottom:1.5rem;
+  max-width:280px;
+}
+.footer-social{
+  display:flex;gap:0.75rem;
+}
+.social-link{
+  width:38px;height:38px;
+  border:1px solid rgba(200,169,110,0.2);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.9rem;
+  color:rgba(245,240,232,0.5);
+  transition:all var(--transition-fast);
+}
+.social-link:hover{
+  border-color:var(--gold);
+  color:var(--gold);
+  transform:translateY(-2px);
+}
+.footer-col h4{
+  font-size:0.75rem;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:400;
+  margin-bottom:1.5rem;
+}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:0.75rem}
+.footer-links li a{
+  font-size:0.9rem;color:rgba(245,240,232,0.45);
+  transition:color var(--transition-fast);
+  font-weight:300;
+}
+.footer-links li a:hover{color:var(--cream)}
+.footer-hours{
+  display:flex;flex-direction:column;gap:0.5rem;
+}
+.hour-row{
+  display:flex;justify-content:space-between;
+  font-size:0.85rem;font-weight:300;
+  color:rgba(245,240,232,0.45);
+  padding-bottom:0.5rem;
+  border-bottom:1px solid rgba(200,169,110,0.08);
+}
+.hour-row:last-child{border-bottom:none}
+.hour-row strong{color:rgba(245,240,232,0.7);font-weight:400}
+.footer-address{
+  font-size:0.85rem;
+  line-height:1.75;
+  color:rgba(245,240,232,0.45);
+  font-weight:300;
+  margin-bottom:1.25rem;
+}
+.footer-map{
+  border-radius:8px;overflow:hidden;
+  height:120px;
+  border:1px solid rgba(200,169,110,0.15);
+  background:rgba(255,255,255,0.04);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.8rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:rgba(245,240,232,0.3);
+}
+.footer-bottom{
+  max-width:1300px;margin:4rem auto 0;
+  padding-top:2rem;
+  border-top:1px solid rgba(200,169,110,0.1);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-bottom p{
+  font-size:0.8rem;color:rgba(245,240,232,0.25);font-weight:300;
+}
+
+/* COFFEE BEAN DECO */
+.bean-deco{
+  position:absolute;
+  opacity:0.04;
+  pointer-events:none;
+}
+
+/* SECTION DIVIDER */
+.divider{
+  height:1px;
+  background:linear-gradient(to right, transparent, var(--beige), transparent);
+  max-width:1300px;
+  margin:0 auto;
+}
+
+/* OPEN STATUS BADGE */
+.open-badge{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.4rem 1rem;
+  background:rgba(74,82,64,0.15);
+  border:1px solid rgba(122,140,110,0.3);
+  border-radius:100px;
+  font-size:0.75rem;
+  color:var(--green-sage);
+  letter-spacing:0.08em;
+  margin-bottom:1.5rem;
+}
+.open-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green-sage);
+  animation:pulse 2s ease infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:0.5;transform:scale(1.3)}
+}
+
+/* PARALLAX */
+.parallax-bg{will-change:transform}
+
+/* MOBILE */
+@media(max-width:1024px){
+  .section{padding:6rem 2.5rem}
+  #stats{padding:4rem 2.5rem}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-divider{display:none}
+  #navbar{padding:1.25rem 2.5rem}
+  #navbar.scrolled{padding:0.9rem 2.5rem}
+}
+@media(max-width:900px){
+  .about-grid,.brewing-grid{grid-template-columns:1fr;gap:3rem}
+  .menu-grid{grid-template-columns:repeat(2,1fr)}
+  .baristas-grid{grid-template-columns:repeat(2,1fr)}
+  .events-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .gallery-item.tall{grid-row:span 1}
+  .gallery-item.wide{grid-column:span 1}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:3rem}
+  .testimonial-card{flex:0 0 calc(50% - 1rem)}
+}
+@media(max-width:768px){
+  .nav-links,.nav-reserve-btn{display:none}
+  .hamburger{display:flex}
+  .section{padding:5rem 1.5rem}
+  #stats{padding:3rem 1.5rem}
+  .menu-grid{grid-template-columns:1fr}
+  .baristas-grid{grid-template-columns:1fr}
+  .testimonial-card{flex:0 0 calc(100% - 0rem)}
+  .form-row{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr;gap:2.5rem}
+  footer{padding:4rem 1.5rem 2rem}
+  #navbar{padding:1rem 1.5rem}
+  #navbar.scrolled{padding:0.8rem 1.5rem}
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-ctas{flex-direction:column;align-items:center}
+  .about-image-stack{height:400px}
+  .about-img-main{height:320px}
+  .about-img-accent{height:200px}
+  .about-badge{right:-5px}
+}
+
+/* SMOOTH FOCUS */
+*:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:3px;
+  border-radius:4px;
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loader">
+  <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/d1c826e5-faf1-470e-a2aa-b969b54078cf/logo.png?format=300w" alt="The Cupping Room" style="height:70px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:0.9;animation:fadeInUp 0.8s ease forwards;">
+  <div class="loader-bar"><div class="loader-progress"></div></div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/d1c826e5-faf1-470e-a2aa-b969b54078cf/logo.png?format=300w" alt="The Cupping Room" style="height:44px;width:auto;object-fit:contain;filter:brightness(0) invert(1);transition:filter 0.4s ease;" id="navLogoImg"></a>
+  <ul class="nav-links">
+    <li><a href="about.html">Our Story</a></li>
+    <li><a href="menu.html">Menu</a></li>
+    <li><a href="coffee.html">Baristas</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+    <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☾</button>
+    <a href="contact.html" class="nav-reserve-btn">Reserve</a>
+    <div class="hamburger" id="hamburger" role="button" aria-label="Open menu" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobile-menu">
+  <ul class="mobile-nav-links">
+    <li><a href="about.html" class="mob-link">Story</a></li>
+    <li><a href="menu.html" class="mob-link">Menu</a></li>
+    <li><a href="coffee.html" class="mob-link">Baristas</a></li>
+    <li><a href="events.html" class="mob-link">Events</a></li>
+    <li><a href="gallery.html" class="mob-link">Gallery</a></li>
+    <li><a href="contact.html" class="mob-link">Reserve</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg parallax-bg">
+    <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/910bd214-e156-45d4-ba02-00f5ee5539cf/welcomehero.png?format=1500w" alt="Coffee shop atmosphere" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.parentElement.style.background='#2C1A0E'">
+  </div>
+  <div class="hero-content">
+    <div class="open-badge"><span class="open-dot"></span> Open Now · Until 4pm Today</div>
+    <p class="hero-eyebrow">Specialty Coffee · Canberra, Australia</p>
+    <h1 class="hero-headline">Crafted Coffee.<br><em>Shared Moments.</em></h1>
+    <p class="hero-sub">Award-winning specialty coffee, seasonal brunch, and a community<br>gathered around the love of exceptional craft.</p>
+    <div class="hero-ctas">
+      <a href="menu.html" class="btn-primary">Explore Menu</a>
+      <a href="contact.html" class="btn-outline">Book a Table</a>
+    </div>
+  </div>
+  <div class="hero-scroll" onclick="location.href='about.html'">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-item">Single Origin Espresso <span>✦</span> Seasonal Brunch <span>✦</span> Filter Coffee <span>✦</span> Cold Brew <span>✦</span> Cupping Sessions <span>✦</span> Barista Training <span>✦</span> Coffee Workshops <span>✦</span> Community Events <span>✦</span></div>
+    <div class="marquee-item">Single Origin Espresso <span>✦</span> Seasonal Brunch <span>✦</span> Filter Coffee <span>✦</span> Cold Brew <span>✦</span> Cupping Sessions <span>✦</span> Barista Training <span>✦</span> Coffee Workshops <span>✦</span> Community Events <span>✦</span></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about-intro" class="section">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-image-stack reveal-left">
+        <img class="about-img-main" src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/87dc7f4e-307b-4c3a-8135-6a881bc8b285/Cupping-Room+_Photos-December-53.jpg?format=1000w" alt="Specialty coffee preparation" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+        <img class="about-img-accent" src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1750660227904-VCUX8U1WMUEOEIGITW0B/DSC05561.JPG?format=800w" alt="Coffee beans" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+        <div class="about-badge">
+          <strong>15+</strong>
+          <small>Years of Craft</small>
+        </div>
+      </div>
+      <div class="about-text reveal-right">
+        <p class="section-label">Our Story</p>
+        <h2 class="section-title">Where Every Cup Tells a <em>Story</em></h2>
+        <p>The Cupping Room began with a simple belief: great coffee should be accessible, understood, and celebrated. Founded in the heart of Canberra, we've spent over a decade building relationships with farmers across Ethiopia, Colombia, and Guatemala.</p>
+        <p>We obsess over every variable — from soil elevation to roast curve — so that what lands in your cup is nothing short of extraordinary. Our seasonal menu changes with intention, reflecting the rhythms of Australian produce and the evolving landscape of specialty coffee.</p>
+        <p>More than a café, we're a gathering place — for conversations that matter, work that inspires, and moments that linger long after the last sip.</p>
+        <div class="about-sig">— The Cupping Room Team</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <span class="stat-number" data-target="50">0</span>
+      <span class="stat-label">Origin Countries</span>
+    </div>
+    <div class="stat-divider reveal"></div>
+    <div class="stat-item reveal">
+      <span class="stat-number" data-target="12">0</span>
+      <span class="stat-label">Years in Canberra</span>
+    </div>
+    <div class="stat-divider reveal"></div>
+    <div class="stat-item reveal">
+      <span class="stat-number" data-target="400">0</span>
+      <span class="stat-label">Cups Daily</span>
+    </div>
+    <div class="stat-divider reveal"></div>
+    <div class="stat-item reveal">
+      <span class="stat-number" data-target="18">0</span>
+      <span class="stat-label">Barista Champions</span>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu-section" class="section">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:3rem" class="reveal">
+      <p class="section-label" style="justify-content:center">What We Serve</p>
+      <h2 class="section-title">Seasonal <em>Favourites</em></h2>
+      <p style="font-size:1rem;color:var(--text-muted);font-weight:300;max-width:450px;margin:0 auto;line-height:1.8">Each item crafted with the finest seasonal ingredients, served the way it was meant to be.</p>
+    </div>
+    <div class="menu-tabs reveal">
+      <button class="menu-tab active" data-filter="coffee">Coffee</button>
+      <button class="menu-tab" data-filter="brunch">Brunch</button>
+      <button class="menu-tab" data-filter="filter">Filter</button>
+      <button class="menu-tab" data-filter="seasonal">Seasonal</button>
+    </div>
+    <div class="menu-grid" id="menuGrid">
+      <div class="menu-card reveal" data-category="coffee">
+        <div class="menu-card-img">
+          <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1757486839905-XHNRK4EC1B91FP2JQIHS/DSC00983.JPG?format=800w" alt="Single Origin Espresso" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+          <span class="menu-card-tag">Signature</span>
+        </div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Single Origin Espresso</h3>
+          <p class="menu-card-desc">Ethiopian Yirgacheffe, rotating seasonally. Notes of jasmine, stone fruit, and dark chocolate with a silky finish.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">$5.50</span>
+            <button class="menu-card-order">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal" data-category="coffee" style="transition-delay:0.1s">
+        <div class="menu-card-img">
+          <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1757486774893-BYKFYJOMYL5D6BFDYELT/DSC00938.JPG?format=800w" alt="Oat Flat White" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+        </div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Oat Flat White</h3>
+          <p class="menu-card-desc">House blend with steamed oat milk. Velvet texture, caramel sweetness, crafted for balance and comfort.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">$6.00</span>
+            <button class="menu-card-order">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal" data-category="brunch" style="transition-delay:0.2s">
+        <div class="menu-card-img">
+          <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1725236761601-LAVO5KIS0YD3NL3GN3DP/Cupping-Room_August-40.jpg?format=800w" alt="Seasonal Brunch Board" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+          <span class="menu-card-tag">Chef's Pick</span>
+        </div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Smashed Avo Toast</h3>
+          <p class="menu-card-desc">House sourdough, whipped goat cheese, heirloom tomatoes, micro herbs, and a 63° egg.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">$22</span>
+            <button class="menu-card-order">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal" data-category="filter">
+        <div class="menu-card-img">
+          <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1757486676615-0AFBTGWCKNJRGUSNJNJU/DSC00822.JPG?format=800w" alt="Pour Over" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+        </div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">V60 Pour Over</h3>
+          <p class="menu-card-desc">Colombian Huila, hand-poured. Bright acidity, dried cherry, milk chocolate, clean sweet finish.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">$8.50</span>
+            <button class="menu-card-order">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal" data-category="seasonal" style="transition-delay:0.1s">
+        <div class="menu-card-img">
+          <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1757486799535-M9D8WH71L0KFSHZTGPJU/DSC00957.JPG?format=800w" alt="Seasonal Special" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+          <span class="menu-card-tag">Limited</span>
+        </div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Autumn Spice Latte</h3>
+          <p class="menu-card-desc">Seasonal blend with cinnamon, cardamom, and vanilla. A warming cup made for cooler mornings.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">$7.00</span>
+            <button class="menu-card-order">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal" data-category="brunch" style="transition-delay:0.2s">
+        <div class="menu-card-img">
+          <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/b1238040-c503-4a77-aaba-a6aa19c998cd/DSC05596.JPG?format=1000w" alt="Brunch Eggs" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+        </div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Shakshuka</h3>
+          <p class="menu-card-desc">Spiced tomato and pepper sauce, poached eggs, za'atar, labneh, warm pita. A Sunday essential.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">$24</span>
+            <button class="menu-card-order">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:3rem" class="reveal">
+      <a href="#" class="btn-primary" style="background:var(--brown-mid);color:var(--cream);display:inline-block">View Full Menu →</a>
+    </div>
+  </div>
+</section>
+
+<!-- BREWING SHOWCASE -->
+<section id="brewing">
+  <div class="brewing-inner">
+    <div class="brewing-grid">
+      <div>
+        <p class="section-label" style="color:rgba(200,169,110,0.7)">The Process</p>
+        <h2 class="section-title" style="color:var(--cream)">Coffee Brewed<br>with <em>Intention</em></h2>
+        <p style="font-size:1rem;line-height:1.85;color:rgba(245,240,232,0.5);font-weight:300;margin-bottom:0.5rem">From the moment a coffee cherry is picked to the final pour, we're involved at every stage. No shortcuts. No compromises.</p>
+        <div class="brewing-steps">
+          <div class="brewing-step reveal">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <h4>Direct Farm Sourcing</h4>
+              <p>We visit our farm partners annually across Ethiopia, Colombia, and Guatemala, paying above market premiums for exceptional lots.</p>
+            </div>
+          </div>
+          <div class="brewing-step reveal">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <h4>In-House Roasting</h4>
+              <p>Our head roaster profiles each origin to highlight its best attributes — light, transparent roasts that let the terroir speak.</p>
+            </div>
+          </div>
+          <div class="brewing-step reveal">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <h4>Precision Extraction</h4>
+              <p>Every espresso is dialled in daily. Every filter brew is timed to the second. Your cup is the result of obsessive care.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="brewing-visual reveal-right">
+        <img class="brewing-main-img" src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1725236765287-LID2HMWI339BZ1LM9SU5/Cupping-Room_August-53.jpg?format=800w" alt="Barista crafting coffee" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+        <div class="brewing-float-card">
+          <p>Today's Featured</p>
+          <strong>Ethiopia Sidama</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BARISTAS -->
+<section id="baristas">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:1rem" class="reveal">
+      <p class="section-label" style="justify-content:center">The Team</p>
+      <h2 class="section-title">Our <em>Baristas</em></h2>
+      <p style="font-size:1rem;color:var(--text-muted);font-weight:300;max-width:400px;margin:0 auto;line-height:1.8">World-class baristas who compete, teach, and live for the craft of coffee.</p>
+    </div>
+    <div class="baristas-grid">
+      <div class="barista-card reveal">
+        <div class="barista-avatar">
+          <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1725236757674-9OTEY51O5N9VOVBOR0AD/Cupping-Room_August-23.jpg?format=800w" alt="Sarah Chen" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+        </div>
+        <div class="barista-name">Sarah Chen</div>
+        <div class="barista-role">Head Barista & Trainer</div>
+        <p class="barista-bio">2× Australian Barista Championship finalist. Sarah leads our training programme and shapes the flavour philosophy of every cup.</p>
+        <span class="barista-specialty">Espresso & Milk Work</span>
+      </div>
+      <div class="barista-card reveal" style="transition-delay:0.1s">
+        <div class="barista-avatar">
+          <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1725236835206-K1YXOSZNAQ0Z24MW28CH/Cupping-Room_August-173.jpg?format=800w" alt="Marcus Webb" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+        </div>
+        <div class="barista-name">Marcus Webb</div>
+        <div class="barista-role">Filter Specialist & Roaster</div>
+        <p class="barista-bio">Certified Q Grader with 8 years of sourcing experience. Marcus oversees our roastery and seasonal filter offerings.</p>
+        <span class="barista-specialty">Filter & Single Origin</span>
+      </div>
+      <div class="barista-card reveal" style="transition-delay:0.2s">
+        <div class="barista-avatar">
+          <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1725236761248-95VE3QXFVQ7CDHLP3HV7/Cupping-Room_August-25.jpg?format=800w" alt="Amara Osei" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+        </div>
+        <div class="barista-name">Amara Osei</div>
+        <div class="barista-role">Latte Artist & Workshop Lead</div>
+        <p class="barista-bio">World Latte Art Championship competitor. Amara runs our monthly workshops and has a gift for making the complex feel approachable.</p>
+        <span class="barista-specialty">Latte Art & Education</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testimonials-inner">
+    <div style="text-align:center;margin-bottom:1rem" class="reveal">
+      <p class="section-label" style="justify-content:center">What People Say</p>
+      <h2 class="section-title">Loved by <em>Canberra</em></h2>
+    </div>
+    <div class="testimonial-slider">
+      <div class="testimonial-track" id="testimonialTrack">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">The best coffee I've had outside of a World Barista Championship. The attention to detail is extraordinary — you can taste the care in every cup.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar"><img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1757486707532-0NNQ0PD32169326NX5XD/DSC00869.JPG?format=800w" alt="Review" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'"></div>
+            <div class="testimonial-info"><h5>James O'Brien</h5><small>Food Critic, Canberra Times</small></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">My Sunday ritual for six years running. The shakshuka, the flat white, the light — it all just works perfectly together. A Canberra institution.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar"><img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1750660389493-JT14R3NFNIWE2XNWSWIG/DSC05878.JPG?format=800w" alt="Review" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'"></div>
+            <div class="testimonial-info"><h5>Priya Nair</h5><small>Regular since 2018</small></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">The workshop completely changed how I make coffee at home. The team's knowledge is exceptional — genuinely world-class education delivered with warmth.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar"><img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1725236767144-GXXXB5OYHFGA4DVV5QLG/Cupping-Room_August-73.jpg?format=800w" alt="Review" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'"></div>
+            <div class="testimonial-info"><h5>Tom Eriksson</h5><small>Workshop Graduate</small></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">Every single time I visit, there's a new single origin to discover. The cupping notes are always spot-on. This is specialty coffee at its absolute finest.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar"><img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1725236733971-4VVX4EA5WKI8PQZG62AM/Cupping-Room_August-1.jpg?format=800w" alt="Review" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'"></div>
+            <div class="testimonial-info"><h5>Lily Zhang</h5><small>Coffee Enthusiast</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slider-controls reveal">
+      <button class="slider-btn" id="prevBtn">←</button>
+      <div class="slider-dots" id="sliderDots">
+        <div class="slider-dot active"></div>
+        <div class="slider-dot"></div>
+      </div>
+      <button class="slider-btn" id="nextBtn">→</button>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:1rem" class="reveal">
+      <p class="section-label" style="justify-content:center">Follow Along</p>
+      <h2 class="section-title">Life at The <em>Cupping Room</em></h2>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="gallery-item tall">
+        <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1750660282342-6VRKDKKBNNUX36QBSLQC/DSC05651.JPG?format=800w" alt="Barista" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+        <div class="gallery-overlay"><span>The Craft</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1750660306796-TCR1IL6HKIVTOC3VTLP6/DSC05676.JPG?format=800w" alt="Latte art" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+        <div class="gallery-overlay"><span>Latte Art</span></div>
+      </div>
+      <div class="gallery-item wide">
+        <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1740623268218-CXOEIZZ54PF1F24FKXJW/Cupping-Room+_Photos-December-24.jpg?format=800w" alt="Cafe interior" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+        <div class="gallery-overlay"><span>Our Space</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1725236842781-PIZKSVRCEJQJJS8MRLT2/Cupping-Room_August-247.jpg?format=800w" alt="Brunch" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+        <div class="gallery-overlay"><span>Brunch</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1720748198702-Z4JEWBVJTOIP8O6Z6UHS/DSC06924.jpg?format=800w" alt="Coffee beans" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+        <div class="gallery-overlay"><span>Origins</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1720748240763-I7GYSR52VTITJFB2D4CZ/DSC06962.jpg?format=800w" alt="Coffee cup" loading="lazy" onerror="this.style.background='#3a2010';this.style.opacity='0.5'">
+        <div class="gallery-overlay"><span>Pour Over</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section id="events">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:1rem" class="reveal">
+      <p class="section-label" style="justify-content:center;color:rgba(200,169,110,0.7)">Community</p>
+      <h2 class="section-title" style="color:var(--cream)">Events & <em style="color:var(--gold)">Workshops</em></h2>
+      <p style="font-size:1rem;color:rgba(245,240,232,0.5);font-weight:300;max-width:450px;margin:0 auto;line-height:1.8">Join us for immersive coffee experiences — from beginner tastings to professional barista training.</p>
+    </div>
+    <div class="events-grid">
+      <div class="event-card reveal">
+        <div class="event-date">
+          <div class="event-date-day">18</div>
+          <div class="event-date-month">May</div>
+        </div>
+        <div class="event-info">
+          <h4>Introduction to Espresso</h4>
+          <p>Learn the fundamentals of espresso extraction. Hands-on time on our La Marzocca, guided by our head barista.</p>
+          <div class="event-meta"><span>9:00 AM</span><span>3 Hours</span><span>$85/person</span></div>
+          <a href="contact.html" class="event-link">Register Now →</a>
+        </div>
+      </div>
+      <div class="event-card reveal" style="transition-delay:0.1s">
+        <div class="event-date">
+          <div class="event-date-day">25</div>
+          <div class="event-date-month">May</div>
+        </div>
+        <div class="event-info">
+          <h4>Origin Cupping Session</h4>
+          <p>Taste 6 single-origin coffees side by side. Discover how terroir, processing, and roasting shape your cup.</p>
+          <div class="event-meta"><span>10:00 AM</span><span>2 Hours</span><span>$55/person</span></div>
+          <a href="contact.html" class="event-link">Register Now →</a>
+        </div>
+      </div>
+      <div class="event-card reveal">
+        <div class="event-date">
+          <div class="event-date-day">01</div>
+          <div class="event-date-month">Jun</div>
+        </div>
+        <div class="event-info">
+          <h4>Filter & Brewing Methods</h4>
+          <p>From Chemex to Aeropress, explore the full spectrum of filter brewing. Take home your perfect recipe.</p>
+          <div class="event-meta"><span>11:00 AM</span><span>2.5 Hours</span><span>$65/person</span></div>
+          <a href="contact.html" class="event-link">Register Now →</a>
+        </div>
+      </div>
+      <div class="event-card reveal" style="transition-delay:0.1s">
+        <div class="event-date">
+          <div class="event-date-day">08</div>
+          <div class="event-date-month">Jun</div>
+        </div>
+        <div class="event-info">
+          <h4>Latte Art Masterclass</h4>
+          <p>Amara's signature class. From basic tulips to advanced swans — an afternoon of precision and creativity.</p>
+          <div class="event-meta"><span>2:00 PM</span><span>3 Hours</span><span>$95/person</span></div>
+          <a href="contact.html" class="event-link">Register Now →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVATION -->
+<section id="reservation">
+  <div class="reservation-inner">
+    <div class="reveal">
+      <p class="section-label" style="justify-content:center;color:rgba(200,169,110,0.7)">Dine With Us</p>
+      <h2 class="section-title" style="color:var(--cream)">Make a <em style="color:var(--gold)">Reservation</em></h2>
+      <p style="color:rgba(245,240,232,0.5);font-weight:300;line-height:1.8;font-size:1rem">Walk-ins always welcome. Book ahead for weekends and special occasions.</p>
+    </div>
+    <div class="reservation-form reveal">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="res-name">Full Name</label>
+          <input type="text" id="res-name" placeholder="Your full name">
+        </div>
+        <div class="form-group">
+          <label for="res-email">Email Address</label>
+          <input type="email" id="res-email" placeholder="your@email.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="res-date">Date</label>
+          <input type="date" id="res-date">
+        </div>
+        <div class="form-group">
+          <label for="res-time">Time</label>
+          <select id="res-time">
+            <option value="">Select time</option>
+            <option>7:00 AM</option><option>7:30 AM</option>
+            <option>8:00 AM</option><option>8:30 AM</option>
+            <option>9:00 AM</option><option>9:30 AM</option>
+            <option>10:00 AM</option><option>10:30 AM</option>
+            <option>11:00 AM</option><option>11:30 AM</option>
+            <option>12:00 PM</option><option>12:30 PM</option>
+            <option>1:00 PM</option><option>1:30 PM</option>
+            <option>2:00 PM</option><option>2:30 PM</option>
+            <option>3:00 PM</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="res-guests">Guests</label>
+          <select id="res-guests">
+            <option>1 person</option>
+            <option>2 people</option>
+            <option>3 people</option>
+            <option>4 people</option>
+            <option>5–6 people</option>
+            <option>7+ people (events)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="res-phone">Phone (optional)</label>
+          <input type="tel" id="res-phone" placeholder="+61 4__ ___ ___">
+        </div>
+      </div>
+      <button class="reserve-submit" onclick="handleReservation()">Confirm Reservation</button>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="newsletter">
+  <div class="newsletter-inner reveal">
+    <p class="section-label" style="justify-content:center">Stay Connected</p>
+    <h2 class="section-title">Get First Access to <em>New Menus</em></h2>
+    <p style="font-size:1rem;color:var(--text-muted);font-weight:300;line-height:1.8">Join 8,000+ coffee lovers for seasonal menu drops, event invitations, and behind-the-scenes stories from our roastery.</p>
+    <div class="newsletter-input-row">
+      <input type="email" class="newsletter-input" placeholder="Enter your email address">
+      <button class="newsletter-btn">Subscribe</button>
+    </div>
+    <p class="newsletter-privacy">No spam, ever. Unsubscribe anytime. We respect your inbox.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-top-line"></div>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/983b611c-8d00-4047-bf87-76e86a8437d8/logolarge.png?format=500w" alt="The Cupping Room" style="height:60px;width:auto;object-fit:contain;margin-bottom:1rem;opacity:0.9;">
+      <p>Canberra's home of specialty coffee. Where craft, community, and exceptional flavour come together, one cup at a time.</p>
+      <div class="footer-social">
+        <a href="#" class="social-link" aria-label="Instagram">✦</a>
+        <a href="#" class="social-link" aria-label="Facebook">f</a>
+        <a href="#" class="social-link" aria-label="Twitter">𝕏</a>
+        <a href="#" class="social-link" aria-label="TikTok">▷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul class="footer-links">
+        <li><a href="about.html">Our Story</a></li>
+        <li><a href="menu.html">Full Menu</a></li>
+        <li><a href="events.html">Workshops</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="#">Gift Cards</a></li>
+        <li><a href="#">Merch & Beans</a></li>
+        <li><a href="admin.html">Staff Portal</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Opening Hours</h4>
+      <div class="footer-hours">
+        <div class="hour-row"><strong>Mon–Fri</strong><span>7:00 – 4:00</span></div>
+        <div class="hour-row"><strong>Saturday</strong><span>7:30 – 4:00</span></div>
+        <div class="hour-row"><strong>Sunday</strong><span>8:00 – 3:30</span></div>
+        <div class="hour-row"><strong>Public Hols</strong><span>8:30 – 2:30</span></div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Visit Us</h4>
+      <p class="footer-address">1/1 Burbury Close<br>Barton ACT 2600<br>Canberra, Australia<br><br>+61 2 6162 1050<br>hello@thecuppingroom.com.au</p>
+      <div class="footer-map">📍 Barton, ACT 2600</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 The Cupping Room. All rights reserved.</p>
+    <p>Crafted with care in Canberra 🌿</p>
+  </div>
+</footer>
+
+<script>
+// ─── LOADER ──────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+    document.getElementById('hero').classList.add('loaded');
+  }, 2200);
+});
+
+// ─── NAVBAR ──────────────────────────────────────────────────
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+  const logoImg = document.getElementById('navLogoImg');
+  if (logoImg) {
+    if (window.scrollY > 60) {
+      logoImg.style.filter = 'none';
+      logoImg.style.height = '36px';
+    } else {
+      logoImg.style.filter = 'brightness(0) invert(1)';
+      logoImg.style.height = '44px';
+    }
+  }
+});
+
+// ─── THEME TOGGLE ────────────────────────────────────────────
+const themeBtn = document.getElementById('themeToggle');
+let darkMode = false;
+themeBtn.addEventListener('click', () => {
+  darkMode = !darkMode;
+  document.body.setAttribute('data-theme', darkMode ? 'dark' : '');
+  themeBtn.textContent = darkMode ? '☀' : '☾';
+});
+
+// ─── HAMBURGER / MOBILE MENU ─────────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', toggleMenu);
+hamburger.addEventListener('keydown', e => e.key === 'Enter' && toggleMenu());
+
+function toggleMenu() {
+  hamburger.classList.toggle('active');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+}
+document.querySelectorAll('.mob-link').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+
+// ─── SCROLL REVEAL ───────────────────────────────────────────
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -80px 0px' });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+  revealObserver.observe(el);
+});
+
+// ─── ANIMATED STATS ──────────────────────────────────────────
+function animateCounter(el) {
+  const target = parseInt(el.getAttribute('data-target'));
+  const duration = 2000;
+  const step = target / (duration / 16);
+  let current = 0;
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= target) {
+      el.textContent = target + (target >= 100 ? '+' : '');
+      clearInterval(timer);
+    } else {
+      el.textContent = Math.floor(current) + (target >= 100 ? '+' : '');
+    }
+  }, 16);
+}
+
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.stat-number').forEach(animateCounter);
+      statsObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+const statsEl = document.getElementById('stats');
+if (statsEl) statsObserver.observe(statsEl);
+
+// ─── MENU FILTER ─────────────────────────────────────────────
+document.querySelectorAll('.menu-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+    const filter = this.getAttribute('data-filter');
+    document.querySelectorAll('.menu-card').forEach(card => {
+      const cat = card.getAttribute('data-category');
+      const show = filter === 'all' || cat === filter;
+      card.style.opacity = show ? '1' : '0.3';
+      card.style.transform = show ? '' : 'scale(0.97)';
+      card.style.pointerEvents = show ? 'all' : 'none';
+      card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    });
+  });
+});
+
+// ─── TESTIMONIAL SLIDER ──────────────────────────────────────
+const track = document.getElementById('testimonialTrack');
+const dots = document.querySelectorAll('.slider-dot');
+let currentSlide = 0;
+const totalSlides = 2;
+const isMobile = () => window.innerWidth <= 768;
+
+function slideTo(idx) {
+  currentSlide = (idx + totalSlides) % totalSlides;
+  const cardWidth = isMobile() ? track.offsetWidth : track.offsetWidth / 3 + 16/3;
+  const perPage = isMobile() ? 1 : 3;
+  const offset = isMobile() 
+    ? (track.offsetWidth + 32) * currentSlide 
+    : 0;
+  track.style.transform = isMobile() ? `translateX(-${offset}px)` : 'translateX(0)';
+  dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+}
+
+document.getElementById('prevBtn').addEventListener('click', () => slideTo(currentSlide - 1));
+document.getElementById('nextBtn').addEventListener('click', () => slideTo(currentSlide + 1));
+setInterval(() => slideTo(currentSlide + 1), 5000);
+
+// ─── PARALLAX HERO ───────────────────────────────────────────
+const heroBg = document.querySelector('.parallax-bg');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  if (heroBg && scrollY < window.innerHeight) {
+    heroBg.style.transform = `translateY(${scrollY * 0.4}px)`;
+  }
+});
+
+// ─── RESERVATION ─────────────────────────────────────────────
+function handleReservation() {
+  const name = document.getElementById('res-name').value;
+  const email = document.getElementById('res-email').value;
+  const date = document.getElementById('res-date').value;
+  const time = document.getElementById('res-time').value;
+  if (!name || !email || !date || !time) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+  const btn = document.querySelector('.reserve-submit');
+  btn.textContent = '✓ Reservation Confirmed!';
+  btn.style.background = '#4A5240';
+  btn.style.color = '#B8C4A8';
+  setTimeout(() => {
+    btn.textContent = 'Confirm Reservation';
+    btn.style.background = '';
+    btn.style.color = '';
+  }, 4000);
+}
+
+// ─── SMOOTH SCROLL ───────────────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>
