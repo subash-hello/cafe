@@ -10,41 +10,40 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #F5F0E8;
-  --cream-light: #FAF7F2;
-  --beige: #E8DECE;
-  --brown-dark: #2C1A0E;
-  --brown-mid: #5C3D24;
-  --brown-warm: #8B5E3C;
-  --brown-light: #C4956A;
-  --green-muted: #4A5240;
-  --green-sage: #7A8C6E;
-  --text-primary: #2C1A0E;
-  --text-secondary: #6B4C35;
-  --text-muted: #9C8070;
-  --gold: #C8A96E;
-  --gold-light: #E2C99A;
-  --shadow: rgba(44, 26, 14, 0.1);
-  --red: #D64545;
-  --green: #3A8B5A;
-  --t: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-[data-theme="dark"] {
-  --cream: #1C1208;
-  --cream-light: #221608;
-  --beige: #2E1F10;
-  --brown-dark: #F5EDD8;
-  --brown-mid: #E0C9A8;
-  --brown-warm: #C4A882;
-  --brown-light: #9A7A5C;
+  --cream: #0B0E14; /* Deep premium dark background */
+  --cream-light: rgba(255, 255, 255, 0.03); /* Glass panel */
+  --beige: rgba(255, 255, 255, 0.08); /* Borders */
+  --brown-dark: #000000;
+  --brown-mid: rgba(255, 255, 255, 0.05);
+  --brown-warm: #E5C396;
+  --brown-light: #B89C7A;
   --green-muted: #8A9C7A;
   --green-sage: #B8C9A4;
-  --text-primary: #F5EDD8;
-  --text-secondary: #C4A882;
-  --text-muted: #8A7060;
-  --shadow: rgba(0,0,0,0.35);
-  --red: #E26363;
-  --green: #4FB076;
+  --text-primary: #F8F9FA;
+  --text-secondary: #B0B5BA;
+  --text-muted: #6B7280;
+  --gold: #D4AF37;
+  --gold-light: #F3E5AB;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --red: #FF5A5F;
+  --green: #00C896;
+  --t: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  --glass-bg: rgba(18, 22, 28, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="light"] {
+  --cream: #F9F9F9;
+  --cream-light: rgba(255, 255, 255, 0.8);
+  --beige: rgba(0, 0, 0, 0.08);
+  --brown-dark: #1F2937;
+  --brown-mid: rgba(0, 0, 0, 0.05);
+  --brown-warm: #8B5E3C;
+  --text-primary: #111827;
+  --text-secondary: #4B5563;
+  --text-muted: #9CA3AF;
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(0, 0, 0, 0.06);
 }
 
 * {
@@ -58,6 +57,9 @@ html, body {
   font-family: 'DM Sans', sans-serif;
   background: var(--cream);
   color: var(--text-primary);
+  background-image: radial-gradient(circle at 15% 50%, rgba(212, 175, 55, 0.04), transparent 50%),
+                    radial-gradient(circle at 85% 30%, rgba(0, 200, 150, 0.03), transparent 50%);
+  background-attachment: fixed;
 }
 
 /* LOGIN PAGE */
@@ -190,14 +192,17 @@ html, body {
 
 /* HEADER */
 .admin-header {
-  background: var(--cream-light);
-  border-bottom: 1px solid var(--beige);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
   padding: 0 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   grid-column: 1 / -1;
-  box-shadow: 0 2px 10px var(--shadow);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
 
 .header-left {
@@ -242,10 +247,13 @@ html, body {
 
 /* SIDEBAR */
 .admin-sidebar {
-  background: var(--brown-dark);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: 2rem 0;
   overflow-y: auto;
-  border-right: 1px solid rgba(200, 169, 110, 0.2);
+  border-right: 1px solid var(--glass-border);
+  z-index: 5;
 }
 
 .nav-section {
@@ -267,7 +275,7 @@ html, body {
   align-items: center;
   gap: 1rem;
   padding: 0.85rem 1.5rem;
-  color: rgba(245, 240, 232, 0.6);
+  color: var(--text-secondary);
   font-size: 0.9rem;
   cursor: pointer;
   transition: all var(--t);
@@ -330,17 +338,35 @@ html, body {
 }
 
 .stat-card {
-  background: var(--cream-light);
-  border-radius: 12px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
   padding: 1.75rem;
-  border: 1px solid var(--beige);
-  box-shadow: 0 2px 10px var(--shadow);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   transition: all var(--t);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity var(--t);
 }
 
 .stat-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px var(--shadow);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card:hover::before {
+  opacity: 1;
 }
 
 .stat-label {
@@ -373,11 +399,13 @@ html, body {
 
 /* TABLES */
 .admin-table {
-  background: var(--cream-light);
-  border-radius: 12px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
   overflow: hidden;
-  border: 1px solid var(--beige);
-  box-shadow: 0 2px 10px var(--shadow);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
 }
 
@@ -391,15 +419,15 @@ table {
 }
 
 th {
-  background: var(--brown-dark);
-  color: var(--cream);
+  background: rgba(255,255,255,0.03);
+  color: var(--text-primary);
   padding: 1.25rem;
   text-align: left;
   font-size: 0.8rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   font-weight: 500;
-  border-bottom: 1px solid rgba(44, 26, 14, 0.2);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 td {
@@ -727,6 +755,7 @@ tbody tr:hover {
   }
 }
 </style>
+<link rel="stylesheet" href="responsive.css">
 </head>
 <body>
 
@@ -770,6 +799,10 @@ tbody tr:hover {
     </div>
     <div class="nav-section">
       <div class="nav-section-title">Manage</div>
+      <div class="nav-link" onclick="switchSection('menu')">
+        <span class="nav-icon">🍽️</span>
+        <span>Menu</span>
+      </div>
       <div class="nav-link" onclick="switchSection('bookings')">
         <span class="nav-icon">📅</span>
         <span>Bookings</span>
@@ -825,13 +858,13 @@ tbody tr:hover {
 
       <!-- SVG CHARTS SECTION -->
       <div class="charts-container" style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-top: 2rem; margin-bottom: 2rem;">
-        <div class="chart-card" style="background: var(--cream-light); border: 1px solid var(--beige); border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 10px var(--shadow);">
+        <div class="chart-card" style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 30px rgba(0,0,0,0.1);">
           <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--text-primary); display:flex; align-items:center; gap:0.5rem;">📈 Weekly Bookings Trend</h3>
           <div id="bookingChartContainer" style="height: 160px; display: flex; align-items: flex-end; gap: 1rem; position: relative; width: 100%;">
             <!-- SVG chart inserted here by script -->
           </div>
         </div>
-        <div class="chart-card" style="background: var(--cream-light); border: 1px solid var(--beige); border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 10px var(--shadow); display: flex; flex-direction: column;">
+        <div class="chart-card" style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 30px rgba(0,0,0,0.1); display: flex; flex-direction: column;">
           <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--text-primary); display:flex; align-items:center; gap:0.5rem;">📊 Inquiry Breakdown</h3>
           <div id="inquiryChartContainer" style="flex: 1; display: flex; align-items: center; justify-content: center; width: 100%;">
             <!-- SVG Donut Chart inserted here by script -->
@@ -982,6 +1015,97 @@ tbody tr:hover {
         </div>
       </div>
     </div>
+
+    <!-- MENU MANAGEMENT SECTION -->
+    <div id="menu" class="admin-section">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
+        <h1 class="section-title" style="margin-bottom:0;">Menu Management</h1>
+        <button class="action-btn" onclick="openMenuModal()" style="padding:0.6rem 1.2rem;background:var(--gold);color:var(--brown-dark);border-color:var(--gold);font-size:0.8rem;border-radius:6px;font-weight:500;margin-right:0;">+ Add Item</button>
+      </div>
+      
+      <div class="filter-bar">
+        <select id="filterMenuCategory" class="filter-select" onchange="loadMenu()">
+          <option value="">All Categories</option>
+          <option value="brunch">All Day Brunch</option>
+          <option value="espresso">Espresso & Milk</option>
+          <option value="filter">Filter & Cold</option>
+          <option value="nonCoffee">Non-Coffee</option>
+          <option value="kids">Kids Menu</option>
+          <option value="sweet">Sweet Things</option>
+        </select>
+        <button class="action-btn" style="margin-left: auto;" onclick="loadMenu()">Refresh</button>
+      </div>
+
+      <div class="admin-table">
+        <div class="table-scroll">
+          <table id="menuTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Dietary</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MENU MODAL -->
+<div id="menuModal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('menuModal')">&times;</button>
+    <h2 class="modal-title" id="menuModalTitle">Add Menu Item</h2>
+    
+    <input type="hidden" id="menuItemId">
+    <div class="modal-field">
+      <label>Item Name</label>
+      <input type="text" id="menuItemName" placeholder="e.g. Smashed Avo Toast" required>
+    </div>
+    <div class="modal-field">
+      <label>Description</label>
+      <textarea id="menuItemDescription" placeholder="Description..."></textarea>
+    </div>
+    <div style="display:flex; gap:1rem;">
+      <div class="modal-field" style="flex:1;">
+        <label>Price ($)</label>
+        <input type="number" step="0.5" id="menuItemPrice" placeholder="22.00" required>
+      </div>
+      <div class="modal-field" style="flex:1;">
+        <label>Category</label>
+        <select id="menuItemCategory">
+          <option value="brunch">All Day Brunch</option>
+          <option value="espresso">Espresso & Milk</option>
+          <option value="filter">Filter & Cold</option>
+          <option value="nonCoffee">Non-Coffee</option>
+          <option value="kids">Kids Menu</option>
+          <option value="sweet">Sweet Things</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-field">
+      <label>Image URL (Optional)</label>
+      <input type="text" id="menuItemImageUrl" placeholder="https://...">
+    </div>
+    <div class="modal-field">
+      <label>Dietary Tags (Comma separated)</label>
+      <input type="text" id="menuItemDietary" placeholder="e.g. V, GF, N">
+    </div>
+    <div class="modal-field" style="display:flex; align-items:center; gap:0.5rem;">
+      <input type="checkbox" id="menuItemAvailable" checked style="width:auto; margin:0;">
+      <label style="margin:0;">Item is Available</label>
+    </div>
+    
+    <div class="modal-actions">
+      <button class="modal-btn secondary" onclick="closeModal('menuModal')">Cancel</button>
+      <button class="modal-btn primary" onclick="saveMenuItem()">Save Item</button>
+    </div>
   </div>
 </div>
 
@@ -1125,6 +1249,7 @@ let currentEditingId = null;
 const LOCAL_BOOKINGS_KEY = 'cr_local_bookings';
 const LOCAL_INQUIRIES_KEY = 'cr_local_inquiries';
 const LOCAL_WORKSHOPS_KEY = 'cr_local_workshops';
+const LOCAL_MENU_KEY = 'cr_local_menu';
 let isLocalMode = false;
 
 // Auto-detect server connectivity and DB timeout fails
@@ -1155,6 +1280,15 @@ function getLocalInquiries() { return JSON.parse(localStorage.getItem(LOCAL_INQU
 function setLocalInquiries(data) { localStorage.setItem(LOCAL_INQUIRIES_KEY, JSON.stringify(data)); }
 function getLocalWorkshops() { return JSON.parse(localStorage.getItem(LOCAL_WORKSHOPS_KEY)) || []; }
 function setLocalWorkshops(data) { localStorage.setItem(LOCAL_WORKSHOPS_KEY, JSON.stringify(data)); }
+function getLocalMenu() { 
+  const menu = JSON.parse(localStorage.getItem(LOCAL_MENU_KEY));
+  if (menu && menu.length) return menu;
+  return [
+    { _id: 'm1', name: 'Smashed Avo Toast', category: 'brunch', price: 22, dietaryTags: ['V'], isAvailable: true },
+    { _id: 'm2', name: 'Single Espresso', category: 'espresso', price: 4.5, dietaryTags: [], isAvailable: true }
+  ]; 
+}
+function setLocalMenu(data) { localStorage.setItem(LOCAL_MENU_KEY, JSON.stringify(data)); }
 
 // ============= THEME SWITCHER =============
 const themeBtn = document.getElementById('themeToggle');
@@ -1831,6 +1965,7 @@ function switchSection(sectionName) {
   if (sectionName === 'bookings') loadBookings();
   if (sectionName === 'inquiries') loadInquiries();
   if (sectionName === 'workshops') loadWorkshops();
+  if (sectionName === 'menu') loadMenu();
 }
 
 function populateTable(tableId, data, type) {
@@ -1878,6 +2013,18 @@ function populateTable(tableId, data, type) {
           <button class="action-btn" onclick="editWorkshop('${row.id}')">Edit</button>
         </td>
       `;
+    } else if (type === 'menu') {
+      tr.innerHTML = `
+        <td><strong>${row.name}</strong></td>
+        <td><span class="status-badge" style="background:rgba(255,255,255,0.1);color:var(--text-secondary);">${row.category}</span></td>
+        <td>$${row.price.toFixed(2)}</td>
+        <td>${row.dietaryTags.map(t => `<span class="status-badge" style="margin-right:0.25rem;">${t}</span>`).join('') || '-'}</td>
+        <td><span class="status-badge status-${row.isAvailable ? 'confirmed' : 'cancelled'}">${row.isAvailable ? 'Available' : 'Sold Out'}</span></td>
+        <td>
+          <button class="action-btn" onclick="editMenuItem('${row.id}')">Edit</button>
+          <button class="action-btn delete" onclick="deleteMenuItem('${row.id}')">Delete</button>
+        </td>
+      `;
     }
     
     tbody.appendChild(tr);
@@ -1912,6 +2059,135 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Enter') handleLogin();
   });
 });
+// ============= MENU MANAGEMENT =============
+let menuItems = [];
+
+async function loadMenu() {
+  const category = document.getElementById('filterMenuCategory')?.value;
+  
+  if (isLocalMode) {
+    menuItems = getLocalMenu();
+    if (category) menuItems = menuItems.filter(m => m.category === category);
+    populateTable('menuTable', menuItems.map(m => ({
+      name: m.name, category: m.category, price: m.price, dietaryTags: m.dietaryTags, isAvailable: m.isAvailable, id: m._id
+    })), 'menu');
+    return;
+  }
+
+  let url = `${API_URL}/api/menu`;
+  if (category) url += `?category=${category}`;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('API failed');
+    menuItems = await response.json();
+    populateTable('menuTable', menuItems.map(m => ({
+      name: m.name, category: m.category, price: m.price, dietaryTags: m.dietaryTags, isAvailable: m.isAvailable, id: m._id
+    })), 'menu');
+  } catch (error) {
+    showAlert('error', 'Failed to load menu, check backend');
+  }
+}
+
+function openMenuModal(id = null) {
+  document.getElementById('menuItemId').value = '';
+  document.getElementById('menuItemName').value = '';
+  document.getElementById('menuItemDescription').value = '';
+  document.getElementById('menuItemPrice').value = '';
+  document.getElementById('menuItemCategory').value = 'brunch';
+  document.getElementById('menuItemImageUrl').value = '';
+  document.getElementById('menuItemDietary').value = '';
+  document.getElementById('menuItemAvailable').checked = true;
+  document.getElementById('menuModalTitle').innerText = 'Add Menu Item';
+  openModal('menuModal');
+}
+
+function editMenuItem(id) {
+  const item = menuItems.find(m => m._id === id);
+  if (!item) return;
+  document.getElementById('menuItemId').value = item._id;
+  document.getElementById('menuItemName').value = item.name;
+  document.getElementById('menuItemDescription').value = item.description || '';
+  document.getElementById('menuItemPrice').value = item.price;
+  document.getElementById('menuItemCategory').value = item.category;
+  document.getElementById('menuItemImageUrl').value = item.imageUrl || '';
+  document.getElementById('menuItemDietary').value = item.dietaryTags ? item.dietaryTags.join(', ') : '';
+  document.getElementById('menuItemAvailable').checked = item.isAvailable;
+  document.getElementById('menuModalTitle').innerText = 'Edit Menu Item';
+  openModal('menuModal');
+}
+
+async function saveMenuItem() {
+  const id = document.getElementById('menuItemId').value;
+  const itemData = {
+    name: document.getElementById('menuItemName').value,
+    description: document.getElementById('menuItemDescription').value,
+    price: parseFloat(document.getElementById('menuItemPrice').value),
+    category: document.getElementById('menuItemCategory').value,
+    imageUrl: document.getElementById('menuItemImageUrl').value,
+    dietaryTags: document.getElementById('menuItemDietary').value.split(',').map(s => s.trim()).filter(s => s),
+    isAvailable: document.getElementById('menuItemAvailable').checked
+  };
+
+  if (isLocalMode) {
+    let localItems = getLocalMenu();
+    if (id) {
+      localItems = localItems.map(m => m._id === id ? { ...m, ...itemData } : m);
+    } else {
+      localItems.push({ ...itemData, _id: 'm' + Date.now() });
+    }
+    setLocalMenu(localItems);
+    showAlert('success', 'Menu item saved locally!');
+    closeModal('menuModal');
+    loadMenu();
+    return;
+  }
+
+  const method = id ? 'PATCH' : 'POST';
+  const url = id ? `${API_URL}/api/menu/${id}` : `${API_URL}/api/menu`;
+
+  try {
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      },
+      body: JSON.stringify(itemData)
+    });
+    if (!response.ok) throw new Error('Failed to save menu item');
+    showAlert('success', 'Menu item saved successfully!');
+    closeModal('menuModal');
+    loadMenu();
+  } catch (error) {
+    showAlert('error', error.message);
+  }
+}
+
+async function deleteMenuItem(id) {
+  if (!confirm('Are you sure you want to delete this menu item?')) return;
+  
+  if (isLocalMode) {
+    let localItems = getLocalMenu();
+    localItems = localItems.filter(m => m._id !== id);
+    setLocalMenu(localItems);
+    showAlert('success', 'Menu item deleted locally');
+    loadMenu();
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/api/menu/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    if (!response.ok) throw new Error('Failed to delete menu item');
+    showAlert('success', 'Menu item deleted');
+    loadMenu();
+  } catch (error) {
+    showAlert('error', error.message);
+  }
+}
 </script>
 </body>
 </html>

@@ -1,0 +1,101 @@
+/* responsive.css */
+/* Global mobile overrides for the Cupping Room */
+
+@media (max-width: 900px) {
+  /* Override inline split grids */
+  div[style*="grid-template-columns: 1fr 1fr"],
+  div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+    gap: 3rem !important;
+  }
+  
+  /* 4 column and 3 column inline grids to 2 */
+  div[style*="grid-template-columns: repeat(4, 1fr)"],
+  div[style*="grid-template-columns:repeat(4,1fr)"],
+  div[style*="grid-template-columns: repeat(3, 1fr)"],
+  div[style*="grid-template-columns:repeat(3,1fr)"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Admin panel stacking */
+  .admin-container {
+    grid-template-columns: 1fr !important;
+  }
+  .sidebar {
+    position: relative !important;
+    height: auto !important;
+    padding: 1.5rem !important;
+  }
+  .admin-main {
+    padding: 1.5rem !important;
+  }
+  .admin-header h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Stack all inline grid columns */
+  div[style*="grid-template-columns: repeat(4, 1fr)"],
+  div[style*="grid-template-columns:repeat(4,1fr)"],
+  div[style*="grid-template-columns: repeat(3, 1fr)"],
+  div[style*="grid-template-columns:repeat(3,1fr)"],
+  div[style*="grid-template-columns: repeat(2, 1fr)"],
+  div[style*="grid-template-columns:repeat(2,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Reduce massive inline gaps on mobile */
+  div[style*="gap: 5rem"], div[style*="gap:5rem"],
+  div[style*="gap: 4rem"], div[style*="gap:4rem"],
+  div[style*="gap: 3rem"], div[style*="gap:3rem"] {
+    gap: 2rem !important;
+  }
+
+  /* Fix padding for sections across all pages */
+  .section,
+  .menu-section-block,
+  footer {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+
+  /* Ensure images inside specific inline grids don't overflow */
+  .reveal-right img, .reveal-left img {
+    height: 300px !important;
+    object-fit: cover;
+  }
+  
+  /* Fix layout stacking issues */
+  .form-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Hide desktop nav */
+  .nav-links, .nav-reserve-btn {
+    display: none !important;
+  }
+  .hamburger {
+    display: flex !important;
+  }
+
+  /* Dashboard specific stacks */
+  .stats-grid, .charts-container {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  .charts-container {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}
+
+/* Ensure mobile menu works */
+#mobile-menu {
+  display: flex !important;
+}
+#mobile-menu:not(.open) {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}

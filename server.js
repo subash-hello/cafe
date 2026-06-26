@@ -77,11 +77,24 @@ const workshopSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+// Menu Item Schema
+const menuItemSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  description: String,
+  price: { type: Number, required: true },
+  category: { type: String, required: true },
+  imageUrl: String,
+  dietaryTags: [String],
+  isAvailable: { type: Boolean, default: true },
+  createdAt: { type: Date, default: Date.now },
+});
+
 // Models
 const Booking = mongoose.model('Booking', bookingSchema);
 const Admin = mongoose.model('Admin', adminSchema);
 const Inquiry = mongoose.model('Inquiry', inquirySchema);
 const Workshop = mongoose.model('Workshop', workshopSchema);
+const MenuItem = mongoose.model('MenuItem', menuItemSchema);
 
 // ============= AUTHENTICATION MIDDLEWARE =============
 
@@ -337,6 +350,56 @@ app.patch('/api/workshops/:id', authenticateAdmin, async (req, res) => {
   }
 });
 
+// ============= ROUTES: MENU =============
+
+// Get all menu items
+app.get('/api/menu', async (req, res) => {
+  try {
+    const { category, isAvailable } = req.query;
+    let query = {};
+    if (category) query.category = category;
+    if (isAvailable !== undefined) query.isAvailable = isAvailable === 'true';
+
+    const menuItems = await MenuItem.find(query).sort({ category: 1, name: 1 });
+    res.json(menuItems);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Create menu item (Admin only)
+app.post('/api/menu', authenticateAdmin, async (req, res) => {
+  try {
+    const menuItem = new MenuItem(req.body);
+    await menuItem.save();
+    res.status(201).json(menuItem);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Update menu item (Admin only)
+app.patch('/api/menu/:id', authenticateAdmin, async (req, res) => {
+  try {
+    const menuItem = await MenuItem.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!menuItem) return res.status(404).json({ error: 'Menu item not found' });
+    res.json(menuItem);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete menu item (Admin only)
+app.delete('/api/menu/:id', authenticateAdmin, async (req, res) => {
+  try {
+    const menuItem = await MenuItem.findByIdAndDelete(req.params.id);
+    if (!menuItem) return res.status(404).json({ error: 'Menu item not found' });
+    res.json({ message: 'Menu item deleted' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // ============= ROUTES: ADMIN AUTH =============
 
 // Admin Register (First time setup only)
@@ -452,6 +515,7 @@ app.post('/api/dashboard/seed', async (req, res) => {
     await Booking.deleteMany({});
     await Inquiry.deleteMany({});
     await Workshop.deleteMany({});
+    await MenuItem.deleteMany({});
 
     // Create Mock Bookings
     const mockBookings = [
@@ -478,6 +542,25 @@ app.post('/api/dashboard/seed', async (req, res) => {
       { name: 'Benedict Cumberbatch', email: 'doctor@strange.co', phone: '+61 444 777 111', workshopType: 'cupping', date: new Date(Date.now() + 200000000), guests: 3, experience: 'advanced', paid: false, status: 'registered' }
     ];
     await Workshop.insertMany(mockWorkshops);
+
+    // Create Mock Menu Items
+    const mockMenuItems = [
+      { name: 'Smashed Avo Toast', description: 'House sourdough, whipped goat curd, heirloom tomatoes, dukkah, micro herbs, 63° egg. A Cupping Room essential.', price: 22.00, category: 'brunch', imageUrl: 'https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1725236761601-LAVO5KIS0YD3NL3GN3DP/Cupping-Room_August-40.jpg?format=800w', dietaryTags: ['V'], isAvailable: true },
+      { name: 'Shakshuka', description: 'Slow-cooked spiced tomato and capsicum, poached eggs, labneh, za\'atar, warm pita bread. Rich, warming, unforgettable.', price: 24.00, category: 'brunch', imageUrl: 'https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1750660251981-F7ACTKIDP12U30HOTIZK/DSC05596.JPG?format=800w', dietaryTags: ['V', 'GF'], isAvailable: true },
+      { name: 'Grain Bowl', description: 'Roasted seasonal grains, charred broccolini, pickled red onion, tahini dressing, crispy chickpeas, soft egg.', price: 23.00, category: 'brunch', imageUrl: 'https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1725236842781-PIZKSVRCEJQJJS8MRLT2/Cupping-Room_August-247.jpg?format=800w', dietaryTags: ['VE', 'GF'], isAvailable: true },
+      { name: 'Pulled Mushroom Toast', description: 'Slow-roasted king oyster mushrooms, truffle oil, aged ricotta, hazelnut crumb, sourdough.', price: 21.00, category: 'brunch', imageUrl: 'https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1757486707532-0NNQ0PD32169326NX5XD/DSC00869.JPG?format=800w', dietaryTags: ['V', 'N'], isAvailable: true },
+      { name: 'Eggs Benedict', description: 'Free-range eggs, house hollandaise, prosciutto or smoked salmon on house English muffin.', price: 24.50, category: 'brunch', imageUrl: 'https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1750660389493-JT14R3NFNIWE2XNWSWIG/DSC05878.JPG?format=800w', dietaryTags: ['GF'], isAvailable: true },
+      { name: 'French Toast', description: 'Brioche, whipped mascarpone, caramelised figs, candied walnuts, warm honey, freeze-dried strawberry.', price: 22.00, category: 'brunch', imageUrl: 'https://images.squarespace-cdn.com/content/v1/6685ff63a56e7c083753f6a0/1750660282342-6VRKDKKBNNUX36QBSLQC/DSC05651.JPG?format=800w', dietaryTags: ['V', 'N'], isAvailable: true },
+      
+      { name: 'House Espresso', description: 'Our signature seasonal blend. Notes of dark chocolate, plum, and hazelnut.', price: 4.50, category: 'espresso', imageUrl: '', dietaryTags: [], isAvailable: true },
+      { name: 'Single Origin Espresso', description: 'Rotating single origin offering. Ask our baristas for today\'s profile.', price: 5.50, category: 'espresso', imageUrl: '', dietaryTags: [], isAvailable: true },
+      { name: 'Batch Brew', description: 'Rotating single origin filter coffee. Clean, complex, and ready to pour.', price: 5.50, category: 'filter', imageUrl: '', dietaryTags: [], isAvailable: true },
+      { name: 'Cold Brew', description: 'Steeped for 18 hours. Smooth, sweet, and highly caffeinated.', price: 6.00, category: 'filter', imageUrl: '', dietaryTags: [], isAvailable: true },
+      
+      { name: 'Hot Chocolate', description: 'Mörk 70% dark chocolate.', price: 6.00, category: 'nonCoffee', imageUrl: '', dietaryTags: [], isAvailable: true },
+      { name: 'Chai Latte', description: 'Prana Chai brewed with soy milk and honey.', price: 6.00, category: 'nonCoffee', imageUrl: '', dietaryTags: [], isAvailable: true },
+    ];
+    await MenuItem.insertMany(mockMenuItems);
 
     res.status(201).json({ message: 'Database populated with high-quality mock data successfully!' });
   } catch (error) {
