@@ -2,6 +2,25 @@
 /* Global mobile overrides for the Cupping Room */
 
 @media (max-width: 900px) {
+  /* Class overrides: 2 column grids -> 1 column */
+  .about-intro-grid,
+  .ona-inner,
+  .contact-grid,
+  .event-card,
+  .process-step {
+    grid-template-columns: 1fr !important;
+    gap: 3rem !important;
+  }
+  
+  /* Class overrides: 3 and 4 column grids -> 2 columns */
+  .values-grid,
+  .community-grid,
+  .tasting-grid,
+  .gal-grid,
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
   /* Override inline split grids */
   div[style*="grid-template-columns: 1fr 1fr"],
   div[style*="grid-template-columns:1fr 1fr"] {
@@ -32,9 +51,34 @@
   .admin-header h1 {
     font-size: 1.5rem;
   }
+
+  /* Fix map embed on tablet */
+  .map-embed {
+    height: 380px !important;
+  }
 }
 
 @media (max-width: 768px) {
+  /* Stack ALL grid classes to 1 column on phone */
+  .about-intro-grid,
+  .ona-inner,
+  .values-grid,
+  .community-grid,
+  .tasting-grid,
+  .process-step,
+  .contact-grid,
+  .form-row,
+  .event-card,
+  .gal-grid,
+  .footer-grid,
+  .menu-grid,
+  .baristas-grid,
+  .stats-grid,
+  .menu-card-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
   /* Stack all inline grid columns */
   div[style*="grid-template-columns: repeat(4, 1fr)"],
   div[style*="grid-template-columns:repeat(4,1fr)"],
@@ -55,9 +99,21 @@
   /* Fix padding for sections across all pages */
   .section,
   .menu-section-block,
-  footer {
+  footer,
+  .ona-section {
     padding-left: 1.5rem !important;
     padding-right: 1.5rem !important;
+  }
+  
+  /* Images height */
+  .stacked-imgs {
+    height: 380px !important;
+  }
+  .img-main, .about-img-main {
+    height: 320px !important;
+  }
+  .img-accent, .about-img-accent {
+    height: 180px !important;
   }
 
   /* Ensure images inside specific inline grids don't overflow */
